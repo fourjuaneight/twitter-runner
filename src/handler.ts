@@ -54,30 +54,35 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   try {
     if (request.method === 'GET') {
       const key = request.headers.get('key');
-      const searchParams = new URLSearchParams(request.url);
+      const url = new URL(request.url);
+      const { searchParams } = url;
 
       switch (true) {
         case searchParams.has('state'):
           console.log({
             searchParams,
+            url,
             error: "Missing 'state' query parameter.",
             version,
           });
           return new Response(
             JSON.stringify({
               error: "Missing 'state' query parameter.",
+              version,
             }),
             badReqBody
           );
         case searchParams.has('code'):
           console.log({
             searchParams,
+            url,
             error: "Missing 'code' query parameter.",
             version,
           });
           return new Response(
             JSON.stringify({
               error: "Missing 'code' query parameter.",
+              version,
             }),
             badReqBody
           );
@@ -90,6 +95,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
           return new Response(
             JSON.stringify({
               error: "You're not authorized to access this API.",
+              version,
             }),
             noAuthReqBody
           );
@@ -109,13 +115,14 @@ export const handleRequest = async (request: Request): Promise<Response> => {
       switch (true) {
         case !request.headers.has('key'):
           return new Response(
-            JSON.stringify({ error: "Missing 'Key' header." }),
+            JSON.stringify({ error: "Missing 'Key' header.", version }),
             noAuthReqBody
           );
         case key !== AUTH_KEY:
           return new Response(
             JSON.stringify({
               error: "You're not authorized to access this API.",
+              version,
             }),
             noAuthReqBody
           );
@@ -131,6 +138,6 @@ export const handleRequest = async (request: Request): Promise<Response> => {
     }
   } catch (error) {
     console.log({ error, version });
-    return new Response(JSON.stringify({ error }), errReqBody);
+    return new Response(JSON.stringify({ error, version }), errReqBody);
   }
 };
