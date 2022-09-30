@@ -69,6 +69,11 @@ export const handleRequest = async (request: Request): Promise<Response> => {
             }),
             badReqBody
           );
+        case !request.headers.has('key'):
+          return new Response(
+            JSON.stringify({ error: "Missing 'Key' header." }),
+            noAuthReqBody
+          );
         case key !== AUTH_KEY:
           return new Response(
             JSON.stringify({
