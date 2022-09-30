@@ -26,6 +26,7 @@ interface HasuraErrors {
  * @returns {Promise<string>}
  */
 export const addState = async (
+  env: { [key: string]: any },
   code: string,
   state: string
 ): Promise<string> => {
@@ -45,16 +46,17 @@ export const addState = async (
   `;
 
   try {
-    const request = await fetch(`${HASURA_ENDPOINT}`, {
+    const request = await fetch(`${env.HASURA_ENDPOINT}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Hasura-Admin-Secret': `${HASURA_ADMIN_SECRET}`,
+        'X-Hasura-Admin-Secret': `${env.HASURA_ADMIN_SECRET}`,
       },
       body: JSON.stringify({ query }),
     });
 
     if (request.status !== 200) {
+      console.log(`[fetch]: ${request.status} - ${request.statusText}`);
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
 
@@ -62,14 +64,17 @@ export const addState = async (
 
     if (response.errors) {
       const { errors } = response as HasuraErrors;
-
-      throw `[hasura]:\n${errors
+      const errLog = errors
         .map(err => `${err.extensions.path}: ${err.message}`)
-        .join('\n')} \n ${query}`;
+        .join('\n');
+
+      console.log(`[hasura]:\n${errLog}`);
+      throw `[hasura]:\n${errLog}\n${query}`;
     }
 
     return (response as HasuraInsertResp).data.insert_meta_twitter_state_one.id;
   } catch (error) {
+    console.log(`[addState]:\n${error}`);
     throw `[addState]:\n${error}`;
   }
 };
