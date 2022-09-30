@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2022-09-30
+
+### Features
+
+- [Convert string to arraybuffer when creating hash.](https://github.com/fourjuaneight/twitter-auth/commit/963c855f6bfdd3318223d8fcecb23efd279bcb73)
+- [Generate initial state and code on auth.](https://github.com/fourjuaneight/twitter-auth/commit/150440de03d0a99eea3b7925dd612db3eefa7347)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/d3da22b9d6e3478081366a602805101498bbbe5e)
+
 ## [0.2.2] - 2022-09-30
 
 ### Miscellaneous Tasks
