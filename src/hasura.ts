@@ -25,7 +25,7 @@ interface HasuraErrors {
 }
 
 export interface State {
-  code: string;
+  codeVerifier: string;
   state: string;
 }
 
@@ -36,7 +36,7 @@ export interface Tokens {
 
 type Table = 'state' | 'tokens';
 
-type Type = 'query' | 'mutation';
+type Type = 'query' | 'search' | 'mutation';
 
 const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
   switch (true) {
@@ -44,12 +44,21 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_state(where: {state: {_eq: "${data.state}"}}) {
-            code
+            codeVerifier
             state
           }
         }
       `;
     case table === 'tokens' && type === 'query':
+      return `
+        query {
+          meta_twitter_tokens(order_by: {created_at: asc}, offset: 1) {
+            accessToken
+            refreshToken
+          }
+        }
+      `;
+    case table === 'tokens' && type === 'search':
       return `
         query {
           meta_twitter_tokens(where: {refreshToken: {_eq: "${data.refreshToken}"}}) {
