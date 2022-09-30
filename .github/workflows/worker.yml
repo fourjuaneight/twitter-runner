@@ -1,0 +1,63 @@
+name: Build and Deploy Worker
+
+on: push
+
+jobs:
+  worker:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Use Node 16.15.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.15.1
+
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          secrets: |
+              AUTH_KEY
+              HASURA_ADMIN_SECRET
+              HASURA_ENDPOINT
+              TWEET_APP_ID
+              TWEET_CLIENT_ID
+              TWEET_CLIENT_SECRET
+              TWEET_USER_ID
+              TWEET_USERNAME
+        env:
+          AUTH_KEY: ${{ secrets.AUTH_KEY }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+          HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+          TWEET_APP_ID: ${{ secrets.TWEET_APP_ID }}
+          TWEET_CLIENT_ID: ${{ secrets.TWEET_CLIENT_ID }}
+          TWEET_CLIENT_SECRET: ${{ secrets.TWEET_CLIENT_SECRET }}
+          TWEET_USER_ID: ${{ secrets.TWEET_USER_ID }}
+          TWEET_USERNAME: ${{ secrets.TWEET_USERNAME }}
