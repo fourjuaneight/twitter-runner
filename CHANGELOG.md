@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2022-09-30
+
+### Features
+
+- [Redirect directly to url on auth request.](https://github.com/fourjuaneight/twitter-auth/commit/8a4714f95198e4b933b4fbe900d6f6911b4cc6b1)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/43a0dac8e212ed380022534b1e73b5474cf74d9c)
+
 ## [0.2.0] - 2022-09-30
 
 ### Bug Fixes
