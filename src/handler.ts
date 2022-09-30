@@ -55,7 +55,11 @@ export const handleRequest = async (request: Request): Promise<Response> => {
     if (request.method === 'GET') {
       const key = request.headers.get('key');
       const url = new URL(request.url);
-      const { searchParams } = url;
+      const params = request.url.replace(
+        /https:\/\/twitter-auth\.[a-z]+\.[a-z]+\/\?(.*)/g,
+        '$1'
+      );
+      const searchParams = new URLSearchParams(params);
 
       switch (true) {
         case searchParams.has('state'):
