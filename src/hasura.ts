@@ -53,19 +53,23 @@ export const addState = async (
       },
       body: JSON.stringify({ query }),
     });
+
+    if (request.status !== 200) {
+      throw `[fetch]: ${request.status} - ${request.statusText}`;
+    }
+
     const response: HasuraInsertResp | HasuraErrors = await request.json();
 
     if (response.errors) {
       const { errors } = response as HasuraErrors;
 
-      throw `(addState) - ${list}: \n ${errors
+      throw `[hasura]:\n${errors
         .map(err => `${err.extensions.path}: ${err.message}`)
         .join('\n')} \n ${query}`;
     }
 
     return (response as HasuraInsertResp).data.insert_meta_twitter_state_one.id;
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw `[addState]:\n${error}`;
   }
 };
