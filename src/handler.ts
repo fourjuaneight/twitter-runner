@@ -51,6 +51,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   // handle request types
   try {
     if (request.method === 'GET') {
+      const key = request.headers.get('key');
       const { searchParams } = new URL(request.url);
 
       switch (true) {
@@ -67,6 +68,13 @@ export const handleRequest = async (request: Request): Promise<Response> => {
               error: "Missing 'code' query parameter.",
             }),
             badReqBody
+          );
+        case key !== AUTH_KEY:
+          return new Response(
+            JSON.stringify({
+              error: "You're not authorized to access this API.",
+            }),
+            noAuthReqBody
           );
         default: {
           const [state, code] = searchParams.getAll('state', 'code');
