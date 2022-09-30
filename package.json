@@ -2,6 +2,7 @@
   "name": "twitter-auth",
   "version": "1.0.0",
   "description": "Serverless function to generate Twitter auth tokens on demand.",
+  "main": "dist/worker.js",
   "scripts": {
     "build": "esbuild --define:process.env.NODE_ENV=\\\"production\\\" src/index.ts --minify --bundle --format=esm --outfile=dist/worker.js",
     "clean": "rm -rf dist",
