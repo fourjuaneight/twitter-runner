@@ -4,8 +4,8 @@ import { handleAuth, handleCallback } from './handler';
 
 const app = new Hono();
 
-app.get('/auth', ctx => handleAuth(ctx));
+app.get('/auth', async ctx => handleAuth(ctx));
 
-app.get('/callback', async ctx => handleCallback(ctx));
+app.get('/', async ctx => handleCallback(ctx));
 
 export default app;
