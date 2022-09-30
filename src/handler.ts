@@ -55,16 +55,12 @@ export const handleRequest = async (request: Request): Promise<Response> => {
     if (request.method === 'GET') {
       const key = request.headers.get('key');
       const url = new URL(request.url);
-      const params = request.url.replace(
-        /https:\/\/twitter-auth\.[a-z]+\.[a-z]+\/\?(.*)/g,
-        '$1'
-      );
-      const searchParams = new URLSearchParams(params);
+      const { searchParams } = new URL(request.url);
 
       switch (true) {
-        case searchParams.has('state'):
+        case Boolean(searchParams.get('state')):
           console.log({
-            searchParams,
+            state: searchParams.get('state'),
             url,
             error: "Missing 'state' query parameter.",
             version,
@@ -76,9 +72,9 @@ export const handleRequest = async (request: Request): Promise<Response> => {
             }),
             badReqBody
           );
-        case searchParams.has('code'):
+        case Boolean(searchParams.get('code')):
           console.log({
-            searchParams,
+            code: searchParams.get('code'),
             url,
             error: "Missing 'code' query parameter.",
             version,
@@ -104,7 +100,8 @@ export const handleRequest = async (request: Request): Promise<Response> => {
             noAuthReqBody
           );
         default: {
-          const [state, code] = searchParams.getAll('state', 'code');
+          const state = searchParams.get('state');
+          const code = searchParams.get('code');
           const newState = await addState(code, state);
 
           return new Response(
