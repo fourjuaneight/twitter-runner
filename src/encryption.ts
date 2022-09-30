@@ -1,5 +1,7 @@
-export const createHash = async (data: ArrayBuffer) => {
+export const createHash = async (str: string) => {
   try {
+    const blob = new Blob([str], { type: 'text/plain; charset=utf-8' });
+    const data = await blob.arrayBuffer();
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray
