@@ -12,6 +12,7 @@ specifiers:
   eslint-config-prettier: ^8.5.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-prettier: ^4.2.1
+  hono: ^2.2.3
   husky: ^7.0.4
   lint-staged: ^11.2.6
   prettier: ^2.7.1
@@ -19,6 +20,7 @@ specifiers:
 
 dependencies:
   '@cloudflare/wrangler': 1.19.13
+  hono: 2.2.3
 
 devDependencies:
   '@cloudflare/workers-types': 3.16.0
@@ -1350,6 +1352,11 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /hono/2.2.3:
+    resolution: {integrity: sha512-Xtokmfyt7Np6S/FIqFAFRuu+7vU7juJF3ApmRjg5cQLsrVEO19icy2Ux/MJ5eV8sDzFgHUmUegI+O/zD4Cam9w==}
+    engines: {node: '>=16.0.0'}
+    dev: false
 
   /human-signals/2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}

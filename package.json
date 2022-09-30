@@ -4,7 +4,7 @@
   "description": "Serverless function to generate Twitter auth tokens on demand.",
   "main": "dist/worker.js",
   "scripts": {
-    "build": "esbuild --define:process.env.NODE_ENV=\\\"production\\\" src/index.ts --minify --bundle --format=esm --outfile=dist/worker.js",
+    "build": "esbuild --define:process.env.NODE_ENV=\\\"production\\\" src/app.ts --minify --bundle --format=esm --outfile=dist/worker.js",
     "clean": "rm -rf dist",
     "clean:node": "rm -rf node_modules",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -48,6 +48,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@cloudflare/wrangler": "^1.19.13"
+    "@cloudflare/wrangler": "^1.19.13",
+    "hono": "^2.2.3"
   }
 }
