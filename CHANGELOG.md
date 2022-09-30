@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2022-09-30
+
+### Features
+
+- [Update hasura methods for better modularity.](https://github.com/fourjuaneight/twitter-auth/commit/ea9c2e1fb33ae898fa4846d9c6dad93f6c9dafc4)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/65cf3a02d40d03d4e1a364846cd33c5e8f57309f)
+
 ## [0.2.3] - 2022-09-30
 
 ### Features
