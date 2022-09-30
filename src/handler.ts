@@ -1,7 +1,7 @@
 import { Context } from 'hono';
 
 import { addData, getData, State, Tokens } from './hasura';
-import { authToken } from './twitter';
+import { authToken, refreshToken } from './twitter';
 import {
   createHash,
   escapeBase64Url,
@@ -15,7 +15,6 @@ export const handleAuth = async (ctx: Context) => {
 
   try {
     const { searchParams } = new URL(request.url);
-
     const key = searchParams.get('key');
 
     if (!key) {
@@ -59,7 +58,7 @@ export const handleCallback = async (ctx: Context) => {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
     const state = searchParams.get('state');
-    const currState = await getData<State>(ctx.env, 'search', 'query', {
+    const currState = await getData<State>(ctx.env, 'state', 'search', {
       codeVerifier: code,
       state,
     });
@@ -79,6 +78,48 @@ export const handleCallback = async (ctx: Context) => {
       state,
     });
     const tokens = await authToken(ctx, code, currState.code);
+    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token ?? '',
+    });
+
+    ctx.status(200);
+
+    return ctx.json({ accessToken: tokens.access_token });
+  } catch (error) {
+    ctx.status(500);
+
+    return ctx.json({ error, version });
+  }
+};
+
+export const handleRefresh = async (ctx: Context) => {
+  const request = ctx.req;
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const key = searchParams.get('key');
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== authKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    const currTokens = await getData<Tokens>(ctx.env, 'search', 'query', {
+      accessToken: '',
+      refreshToken: '',
+    });
+    const tokens = await refreshToken(ctx, currTokens.refreshToken);
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token ?? '',
