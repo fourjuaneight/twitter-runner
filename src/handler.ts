@@ -1,5 +1,7 @@
 import { addState } from './hasura';
 
+import { version } from '../package.json';
+
 // default responses
 const responseInit = {
   headers: {
@@ -56,6 +58,11 @@ export const handleRequest = async (request: Request): Promise<Response> => {
 
       switch (true) {
         case searchParams.has('state'):
+          console.log({
+            searchParams,
+            error: "Missing 'state' query parameter.",
+            version,
+          });
           return new Response(
             JSON.stringify({
               error: "Missing 'state' query parameter.",
@@ -63,6 +70,11 @@ export const handleRequest = async (request: Request): Promise<Response> => {
             badReqBody
           );
         case searchParams.has('code'):
+          console.log({
+            searchParams,
+            error: "Missing 'code' query parameter.",
+            version,
+          });
           return new Response(
             JSON.stringify({
               error: "Missing 'code' query parameter.",
@@ -118,7 +130,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log({ error, version });
     return new Response(JSON.stringify({ error }), errReqBody);
   }
 };
