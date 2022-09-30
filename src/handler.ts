@@ -54,7 +54,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   try {
     if (request.method === 'GET') {
       const key = request.headers.get('key');
-      const { searchParams } = new URL(request.url);
+      const searchParams = new URLSearchParams(request.url);
 
       switch (true) {
         case searchParams.has('state'):
