@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2022-09-30
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/150bf7aa7b780ce15749e03a4d429ec85122fa01)
+- [Remove auth from callback route.](https://github.com/fourjuaneight/twitter-auth/commit/cae70476f0b3c85f1792b7fc71d7370aa84ddca1)
+
 ## [0.2.1] - 2022-09-30
 
 ### Features
