@@ -1,6 +1,6 @@
 import { Context } from 'hono';
 
-import { addState, getState } from './hasura';
+import { addData, getData, State } from './hasura';
 import {
   createHash,
   escapeBase64Url,
@@ -38,7 +38,7 @@ export const handleAuth = async (ctx: Context) => {
     const challenge = escapeBase64Url(codeHash);
     const url = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${ctx.env.TWEET_CLIENT_ID}&redirect_uri=${ctx.env.CALLBACK_URL}&scope=tweet.read%20tweet.write%20users.read%20offline.access&state=${state}&code_challenge=${challenge}&code_challenge_method=s256`;
 
-    await addState(ctx.env, code, state);
+    await addData<State>(ctx.env, 'state', 'mutation', { code, state });
 
     return ctx.redirect(url);
   } catch (error) {
@@ -55,7 +55,10 @@ export const handleCallback = async (ctx: Context) => {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
     const state = searchParams.get('state');
-    const currState = await getState(ctx.env, state);
+    const currState = await getData<State>(ctx.env, 'state', 'query', {
+      code,
+      state,
+    });
 
     if (state !== currState) {
       ctx.status(400);
@@ -67,7 +70,10 @@ export const handleCallback = async (ctx: Context) => {
       });
     }
 
-    const id = await addState(ctx.env, code, state);
+    const id = await addData<State>(ctx.env, 'state', 'mutation', {
+      code,
+      state,
+    });
 
     ctx.status(200);
 

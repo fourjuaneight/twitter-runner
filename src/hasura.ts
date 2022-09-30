@@ -5,6 +5,7 @@ interface HasuraInsertResp {
     };
   };
 }
+
 interface HasuraQueryResp {
   data: {
     [key: string]: {
@@ -23,26 +24,79 @@ interface HasuraErrors {
   }[];
 }
 
-// Upload code and state to Hasura.
-export const addState = async (
-  env: { [key: string]: any },
-  code: string,
-  state: string
-): Promise<string> => {
-  const query = `
-    mutation {
-      insert_meta_twitter_state_one(
-        object: {
-          codeVerifier: "${code}",
-          state: "${state}"
+export interface State {
+  code: string;
+  state: string;
+}
+
+export interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+type Table = 'state' | 'tokens';
+
+type Type = 'query' | 'mutation';
+
+const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
+  switch (true) {
+    case table === 'state' && type === 'query':
+      return `
+        query {
+          meta_twitter_state(where: {state: {_eq: "${data.state}"}}) {
+            state
+          }
         }
-      ) {
-        id
-        codeVerifier
-        state
-      }
-    }
-  `;
+      `;
+    case table === 'tokens' && type === 'query':
+      return `
+        query {
+          meta_twitter_tokens(where: {refreshToken: {_eq: "${data.refreshToken}"}}) {
+            state
+          }
+        }
+      `;
+    case table === 'tokens' && type === 'mutation':
+      return `
+        mutation {
+          insert_meta_twitter_tokens_one(
+            object: {
+              accessToken: "${data.accessToken}",
+              refreshToken: "${data.refreshToken}"
+            }
+          ) {
+            id
+            accessToken
+            refreshToken
+          }
+        }
+      `;
+    default:
+      return `
+        mutation {
+          insert_meta_twitter_state_one(
+            object: {
+              codeVerifier: "${data.code}",
+              state: "${data.state}"
+            }
+          ) {
+            id
+            codeVerifier
+            state
+          }
+        }
+      `;
+  }
+};
+
+// Upload code and state to Hasura.
+export const addData = async <D extends unkown>(
+  env: { [key: string]: any },
+  table: Table,
+  type: Type,
+  data: D
+): Promise<string> => {
+  const query = getQuery<D>(table, type, data);
 
   try {
     const request = await fetch(`${env.HASURA_ENDPOINT}`, {
@@ -71,25 +125,23 @@ export const addState = async (
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
-    return (response as HasuraInsertResp).data.insert_meta_twitter_state_one.id;
+    return (response as HasuraInsertResp).data[
+      `insert_meta_twitter_${table}_one`
+    ].id;
   } catch (error) {
-    console.log(`[addState]:\n${error}`);
-    throw `[addState]:\n${error}`;
+    console.log(`[addData][${table}]:\n${error}`);
+    throw `[addData][${table}]:\n${error}`;
   }
 };
 
 // Get code and state to Hasura.
-export const getState = async (
+export const getData = async <D extends unkown>(
   env: { [key: string]: any },
-  state: string
+  table: Table,
+  type: Type,
+  data: D
 ): Promise<string> => {
-  const query = `
-    query {
-      meta_twitter_state(where: {state: {_eq: "${state}"}}) {
-        state
-      }
-    }
-  `;
+  const query = getQuery<D>(table, type, data);
 
   try {
     const request = await fetch(`${env.HASURA_ENDPOINT}`, {
@@ -118,9 +170,9 @@ export const getState = async (
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
-    return (response as HasuraQueryResp).data.meta_twitter_state[0].state;
+    return (response as HasuraQueryResp).data[`meta_twitter_${table}`][0].state;
   } catch (error) {
-    console.log(`[getState]:\n${error}`);
-    throw `[getState]:\n${error}`;
+    console.log(`[getData][${table}]:\n${error}`);
+    throw `[getData][${table}]:\n${error}`;
   }
 };
