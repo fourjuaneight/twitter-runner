@@ -44,6 +44,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_state(where: {state: {_eq: "${data.state}"}}) {
+            code
             state
           }
         }
@@ -52,7 +53,8 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_tokens(where: {refreshToken: {_eq: "${data.refreshToken}"}}) {
-            state
+            accessToken
+            refreshToken
           }
         }
       `;
@@ -95,7 +97,7 @@ export const addData = async <D extends unkown>(
   table: Table,
   type: Type,
   data: D
-): Promise<string> => {
+): Promise<D> => {
   const query = getQuery<D>(table, type, data);
 
   try {
@@ -127,7 +129,7 @@ export const addData = async <D extends unkown>(
 
     return (response as HasuraInsertResp).data[
       `insert_meta_twitter_${table}_one`
-    ].id;
+    ];
   } catch (error) {
     console.log(`[addData][${table}]:\n${error}`);
     throw `[addData][${table}]:\n${error}`;
@@ -140,7 +142,7 @@ export const getData = async <D extends unkown>(
   table: Table,
   type: Type,
   data: D
-): Promise<string> => {
+): Promise<D> => {
   const query = getQuery<D>(table, type, data);
 
   try {
@@ -170,7 +172,7 @@ export const getData = async <D extends unkown>(
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
-    return (response as HasuraQueryResp).data[`meta_twitter_${table}`][0].state;
+    return (response as HasuraQueryResp).data[`meta_twitter_${table}`][0];
   } catch (error) {
     console.log(`[getData][${table}]:\n${error}`);
     throw `[getData][${table}]:\n${error}`;

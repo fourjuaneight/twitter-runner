@@ -1,6 +1,7 @@
 import { Context } from 'hono';
 
-import { addData, getData, State } from './hasura';
+import { addData, getData, State, Tokens } from './hasura';
+import { authToken } from './twitter';
 import {
   createHash,
   escapeBase64Url,
@@ -60,24 +61,34 @@ export const handleCallback = async (ctx: Context) => {
       state,
     });
 
-    if (state !== currState) {
+    if (state !== currState.state) {
       ctx.status(400);
       return ctx.json({
         error: 'Stored tokens do not match.',
         state,
-        currState,
+        currState: currState.state,
         version,
       });
     }
 
-    const id = await addData<State>(ctx.env, 'state', 'mutation', {
+    await addData<State>(ctx.env, 'state', 'mutation', {
       code,
       state,
+    });
+    const tokens = await authToken(ctx, code, currState.code);
+    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token ?? '',
     });
 
     ctx.status(200);
 
-    return ctx.json({ id, state, code });
+    return ctx.json({
+      state,
+      code,
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token,
+    });
   } catch (error) {
     ctx.status(500);
 
