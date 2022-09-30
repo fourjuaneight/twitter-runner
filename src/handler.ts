@@ -54,17 +54,10 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   try {
     if (request.method === 'GET') {
       const key = request.headers.get('key');
-      const url = new URL(request.url);
       const { searchParams } = new URL(request.url);
 
       switch (true) {
-        case Boolean(searchParams.get('state')):
-          console.log({
-            state: searchParams.get('state'),
-            url,
-            error: "Missing 'state' query parameter.",
-            version,
-          });
+        case !searchParams.has('state'):
           return new Response(
             JSON.stringify({
               error: "Missing 'state' query parameter.",
@@ -72,13 +65,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
             }),
             badReqBody
           );
-        case Boolean(searchParams.get('code')):
-          console.log({
-            code: searchParams.get('code'),
-            url,
-            error: "Missing 'code' query parameter.",
-            version,
-          });
+        case !searchParams.has('code'):
           return new Response(
             JSON.stringify({
               error: "Missing 'code' query parameter.",
