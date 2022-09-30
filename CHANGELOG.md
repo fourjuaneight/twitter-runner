@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2022-09-30
+
+### Features
+
+- [Save access tokens after callback redirect.](https://github.com/fourjuaneight/twitter-auth/commit/33d862ab2923f3f324537e7621155043a35f7d76)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/efb42623463807d6dae73253efc6cadac1600d97)
+
 ## [0.3.0] - 2022-09-30
 
 ### Features
