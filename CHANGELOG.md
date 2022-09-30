@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2022-09-30
+
+### Bug Fixes
+
+- [Update wrangle config to accomodate new framework.](https://github.com/fourjuaneight/twitter-auth/commit/155a1fae886d326da719880cf8ff17ec6f10037a)
+- [Add account id variable.](https://github.com/fourjuaneight/twitter-auth/commit/23c1e5ed514e97f7346da6401e1f6f6ff86c9395)
+
+### Features
+
+- [Add hono framework for better routes handling.](https://github.com/fourjuaneight/twitter-auth/commit/94191a58189eb1272eace8be73994ed9d9a69224)
+- [Move auth key to body and restucture handler to recieve context.](https://github.com/fourjuaneight/twitter-auth/commit/aa2ae485224d40c744b28c22159496bcdcd3871d)
+- [Add twitter auth url route.](https://github.com/fourjuaneight/twitter-auth/commit/9725a4f8b3fbdc9bf73f4e3d0c5c690beade52b9)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/a6aa376305d2e6f75780bd54d209b066e75dfda9)
+
 ## [0.1.0] - 2022-09-30
 
 ### Bug Fixes
