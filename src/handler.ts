@@ -77,7 +77,7 @@ export const handleCallback = async (ctx: Context) => {
       codeVerifier: code,
       state,
     });
-    const tokens = await authToken(ctx, code, currState.code);
+    const tokens = await authToken(ctx, code, currState.codeVerifier);
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token ?? '',

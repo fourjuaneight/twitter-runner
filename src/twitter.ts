@@ -20,6 +20,14 @@ export const authToken = async (
   const redirect_uri = CALLBACK_URL;
   const client_id = TWEET_CLIENT_ID;
   const client_secret = TWEET_CLIENT_SECRET;
+  const params = {
+    code,
+    grant_type: 'authorization_code',
+    client_id,
+    client_secret,
+    redirect_uri,
+    code_verifier,
+  };
 
   try {
     const request = await fetch(authURL, {
@@ -27,15 +35,16 @@ export const authToken = async (
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams({
-        code,
-        grant_type: 'authorization_code',
-        client_id,
-        client_secret,
-        redirect_uri,
-        code_verifier,
-      }),
+      body: Object.entries(params)
+        .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+        .join('&'),
     });
+    console.log(
+      params,
+      Object.entries(params)
+        .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+        .join('&')
+    );
 
     if (request.status !== 200) {
       console.log(`[fetch]: ${request.status} - ${request.statusText}`);

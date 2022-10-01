@@ -96,7 +96,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
         mutation {
           insert_meta_twitter_state_one(
             object: {
-              codeVerifier: "${data.code}",
+              codeVerifier: "${data.codeVerifier}",
               state: "${data.state}"
             }
           ) {
@@ -162,7 +162,6 @@ export const getData = async <D extends unkown>(
   data: D
 ): Promise<D> => {
   const query = getQuery<D>(table, type, data);
-  console.log({ table, type, data, query });
 
   try {
     const request = await fetch(`${env.HASURA_ENDPOINT}`, {
