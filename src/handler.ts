@@ -73,10 +73,6 @@ export const handleCallback = async (ctx: Context) => {
       });
     }
 
-    await addData<State>(ctx.env, 'state', 'mutation', {
-      codeVerifier: code,
-      state,
-    });
     const tokens = await authToken(ctx, code, currState.codeVerifier);
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
       accessToken: tokens.access_token,

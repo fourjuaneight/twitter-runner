@@ -48,13 +48,14 @@ export const authToken = async (
       },
       body,
     });
+    const response: AccessTokenResult = await request.json();
 
     if (request.status !== 200) {
-      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params);
-      throw `[fetch]: ${request.status} - ${request.statusText}`;
+      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params, response);
+      throw `[fetch]: ${request.status} - ${
+        request.statusText
+      }\n${JSON.stringify(request.body)}`;
     }
-
-    const response: AccessTokenResult = await request.json();
 
     return response;
   } catch (error) {
@@ -72,6 +73,15 @@ export const refreshToken = async (ctx: Context, refresh_token: string) => {
   } = ctx.env;
   const client_id = TWEET_CLIENT_ID;
   const client_secret = TWEET_CLIENT_SECRET;
+  const params = {
+    refresh_token,
+    grant_type: 'refresh_token',
+    client_id,
+    client_secret,
+  };
+  const body = Object.entries(params)
+    .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+    .join('&');
   const basicToken = btoa(`${TWEET_USER_ID}:${TWEET_PASSWORD}`);
 
   try {
@@ -81,20 +91,18 @@ export const refreshToken = async (ctx: Context, refresh_token: string) => {
         Authorization: `Basic ${basicToken}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams({
-        refresh_token,
-        grant_type: 'refresh_token',
-        client_id,
-        client_secret,
-      }),
+      body,
     });
+    const response: AccessTokenResult = await request.json();
 
     if (request.status !== 200) {
-      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params);
-      throw `[fetch]: ${request.status} - ${request.statusText}`;
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        params,
+        response,
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
     }
-
-    const response: AccessTokenResult = await request.json();
 
     return response;
   } catch (error) {
