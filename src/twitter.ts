@@ -50,10 +50,7 @@ export const authToken = async (
     });
 
     if (request.status !== 200) {
-      console.log(
-        `[fetch]: ${request.status} - ${request.statusText}`,
-        request
-      );
+      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params);
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
 
@@ -93,10 +90,7 @@ export const refreshToken = async (ctx: Context, refresh_token: string) => {
     });
 
     if (request.status !== 200) {
-      console.log(
-        `[fetch]: ${request.status} - ${request.statusText}`,
-        request
-      );
+      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params);
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
 
