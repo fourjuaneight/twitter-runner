@@ -28,6 +28,9 @@ export const authToken = async (
     redirect_uri,
     code_verifier,
   };
+  const body = Object.entries(params)
+    .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+    .join('&');
 
   try {
     const request = await fetch(authURL, {
@@ -35,16 +38,8 @@ export const authToken = async (
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: Object.entries(params)
-        .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-        .join('&'),
+      body,
     });
-    console.log(
-      params,
-      Object.entries(params)
-        .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-        .join('&')
-    );
 
     if (request.status !== 200) {
       console.log(`[fetch]: ${request.status} - ${request.statusText}`);
