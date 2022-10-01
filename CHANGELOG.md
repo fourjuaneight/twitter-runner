@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2022-10-01
+
+### Bug Fixes
+
+- [Minor typing fixes.](https://github.com/fourjuaneight/twitter-auth/commit/49ad47c026949a6a81b4bb8ac5237058ec76bffd)
+- [Minor typing corrections.](https://github.com/fourjuaneight/twitter-auth/commit/dd7017a2cdf7fbd512dd1d3918fa134962bd609e)
+- [Data access corrections.](https://github.com/fourjuaneight/twitter-auth/commit/2e55877eadd7244dea7269adbc66e05da0589550)
+- [Add basic auth token on twitter requests.](https://github.com/fourjuaneight/twitter-auth/commit/9f01003cfe99f6936e63ee7197d3389e348c378b)
+
+### Features
+
+- [Add refresh route to refresh auth tokens.](https://github.com/fourjuaneight/twitter-auth/commit/30a6b6a289671db6fde154318d1def672041f4c0)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/8bdfb78f1f8d8a281acc0565edd1a9260237c035)
+- [Minor syntax cleanup.](https://github.com/fourjuaneight/twitter-auth/commit/d6cda5e479e073c7356ba1313774a35304316901)
+- [Minor logging updates.](https://github.com/fourjuaneight/twitter-auth/commit/2ec48227a5d70e525b3b25f2885abe97177d5a3c)
+
 ## [0.4.0] - 2022-09-30
 
 ### Features
