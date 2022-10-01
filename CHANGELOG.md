@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2022-10-01
+
+### Bug Fixes
+
+- [Update hash generation to properly encode string.](https://github.com/fourjuaneight/twitter-auth/commit/8a16c7967de9c1061a7e1a4d5e089a9255d5a9fd)
+- [Remove deprecated twitter auth.](https://github.com/fourjuaneight/twitter-auth/commit/c58535e31331d4f55e0f1c93a6e82bec82a45de8)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/6748ef2b04eb9eb3ed42b717371326df3d4cf8ed)
+- [Minor syntax optimizations.](https://github.com/fourjuaneight/twitter-auth/commit/2626519d6d18c6fc1625939e519cfd1b2770947b)
+
 ## [0.5.1] - 2022-10-01
 
 ### Bug Fixes
