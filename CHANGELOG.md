@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - 2022-10-01
+
+### Bug Fixes
+
+- [Only return latest result on hasura queries.](https://github.com/fourjuaneight/twitter-auth/commit/ddbddf5650aee7c520a8ded3edb686f92b7453a9)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/bacce1c5f9b70b87ba02ce138c812934c78d17bf)
+
 ## [0.5.0] - 2022-10-01
 
 ### Bug Fixes
