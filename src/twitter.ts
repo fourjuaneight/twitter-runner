@@ -16,7 +16,13 @@ export const authToken = async (
   code: string,
   code_verifier: string
 ) => {
-  const { CALLBACK_URL, TWEET_CLIENT_ID, TWEET_CLIENT_SECRET } = ctx.env;
+  const {
+    CALLBACK_URL,
+    TWEET_CLIENT_ID,
+    TWEET_CLIENT_SECRET,
+    TWEET_PASSWORD,
+    TWEET_USER_ID,
+  } = ctx.env;
   const redirect_uri = CALLBACK_URL;
   const client_id = TWEET_CLIENT_ID;
   const client_secret = TWEET_CLIENT_SECRET;
@@ -31,18 +37,23 @@ export const authToken = async (
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join('&');
+  const basicToken = btoa(`${TWEET_USER_ID}:${TWEET_PASSWORD}`);
 
   try {
     const request = await fetch(authURL, {
       method: 'POST',
       headers: {
+        Authorization: `Basic ${basicToken}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
     });
 
     if (request.status !== 200) {
-      console.log(`[fetch]: ${request.status} - ${request.statusText}`);
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        request
+      );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
 
@@ -56,14 +67,21 @@ export const authToken = async (
 };
 
 export const refreshToken = async (ctx: Context, refresh_token: string) => {
-  const { TWEET_CLIENT_ID, TWEET_CLIENT_SECRET } = ctx.env;
+  const {
+    TWEET_CLIENT_ID,
+    TWEET_CLIENT_SECRET,
+    TWEET_PASSWORD,
+    TWEET_USER_ID,
+  } = ctx.env;
   const client_id = TWEET_CLIENT_ID;
   const client_secret = TWEET_CLIENT_SECRET;
+  const basicToken = btoa(`${TWEET_USER_ID}:${TWEET_PASSWORD}`);
 
   try {
     const request = await fetch(authURL, {
       method: 'POST',
       headers: {
+        Authorization: `Basic ${basicToken}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
@@ -75,7 +93,10 @@ export const refreshToken = async (ctx: Context, refresh_token: string) => {
     });
 
     if (request.status !== 200) {
-      console.log(`[fetch]: ${request.status} - ${request.statusText}`);
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        request
+      );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
 

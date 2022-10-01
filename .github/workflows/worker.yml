@@ -50,5 +50,6 @@ jobs:
           TWEET_APP_ID: ${{ secrets.TWEET_APP_ID }}
           TWEET_CLIENT_ID: ${{ secrets.TWEET_CLIENT_ID }}
           TWEET_CLIENT_SECRET: ${{ secrets.TWEET_CLIENT_SECRET }}
+          TWEET_PASSWORD: ${{ secrets.TWEET_PASSWORD }}
           TWEET_USER_ID: ${{ secrets.TWEET_USER_ID }}
           TWEET_USERNAME: ${{ secrets.TWEET_USERNAME }}
