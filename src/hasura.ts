@@ -43,6 +43,15 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
     case table === 'state' && type === 'query':
       return `
         query {
+          meta_twitter_state(order_by: {created_at: asc}, offset: 1) {
+            codeVerifier
+            state
+          }
+        }
+      `;
+    case table === 'state' && type === 'search':
+      return `
+        query {
           meta_twitter_state(where: {state: {_eq: "${data.state}"}}) {
             codeVerifier
             state
@@ -153,6 +162,7 @@ export const getData = async <D extends unkown>(
   data: D
 ): Promise<D> => {
   const query = getQuery<D>(table, type, data);
+  console.log({ table, type, data, query });
 
   try {
     const request = await fetch(`${env.HASURA_ENDPOINT}`, {

@@ -115,7 +115,7 @@ export const handleRefresh = async (ctx: Context) => {
       });
     }
 
-    const currTokens = await getData<Tokens>(ctx.env, 'search', 'query', {
+    const currTokens = await getData<Tokens>(ctx.env, 'tokens', 'search', {
       accessToken: '',
       refreshToken: '',
     });
