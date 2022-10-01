@@ -16,34 +16,24 @@ export const authToken = async (
   code: string,
   code_verifier: string
 ) => {
-  const {
-    CALLBACK_URL,
-    TWEET_CLIENT_ID,
-    TWEET_CLIENT_SECRET,
-    TWEET_PASSWORD,
-    TWEET_USER_ID,
-  } = ctx.env;
+  const { CALLBACK_URL, TWEET_CLIENT_ID } = ctx.env;
   const redirect_uri = CALLBACK_URL;
   const client_id = TWEET_CLIENT_ID;
-  const client_secret = TWEET_CLIENT_SECRET;
   const params = {
     code,
     grant_type: 'authorization_code',
     client_id,
-    client_secret,
     redirect_uri,
     code_verifier,
   };
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join('&');
-  const basicToken = btoa(`${TWEET_USER_ID}:${TWEET_PASSWORD}`);
 
   try {
     const request = await fetch(authURL, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${basicToken}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
@@ -51,7 +41,11 @@ export const authToken = async (
     const response: AccessTokenResult = await request.json();
 
     if (request.status !== 200) {
-      console.log(`[fetch]: ${request.status} - ${request.statusText}`, params, response);
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        params,
+        response
+      );
       throw `[fetch]: ${request.status} - ${
         request.statusText
       }\n${JSON.stringify(request.body)}`;
@@ -65,30 +59,21 @@ export const authToken = async (
 };
 
 export const refreshToken = async (ctx: Context, refresh_token: string) => {
-  const {
-    TWEET_CLIENT_ID,
-    TWEET_CLIENT_SECRET,
-    TWEET_PASSWORD,
-    TWEET_USER_ID,
-  } = ctx.env;
+  const { TWEET_CLIENT_ID } = ctx.env;
   const client_id = TWEET_CLIENT_ID;
-  const client_secret = TWEET_CLIENT_SECRET;
   const params = {
     refresh_token,
     grant_type: 'refresh_token',
     client_id,
-    client_secret,
   };
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join('&');
-  const basicToken = btoa(`${TWEET_USER_ID}:${TWEET_PASSWORD}`);
 
   try {
     const request = await fetch(authURL, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${basicToken}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
@@ -99,7 +84,7 @@ export const refreshToken = async (ctx: Context, refresh_token: string) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
     }
