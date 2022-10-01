@@ -1,14 +1,12 @@
 export const createHash = async (str: string) => {
   try {
-    const blob = new Blob([str], { type: 'text/plain; charset=utf-8' });
-    const data = await blob.arrayBuffer();
+    const encoder = new TextEncoder().encode(str);
+    const data = encoder.encode(str);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+    const hashString = String.fromCharCode(...new Uint8Array(hashBuffer));
+    const base64 = btoa(hashString);
 
-    return hashHex;
+    return base64;
   } catch (error) {
     throw `(createHash):\n${error}`;
   }
