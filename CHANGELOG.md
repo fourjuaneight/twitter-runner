@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2022-10-03
+
+### Bug Fixes
+
+- [Update user type from hasura queries.](https://github.com/fourjuaneight/twitter-auth/commit/1e30433fb1dd7dba5d43aaae3b4fb0776936d3c5)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/67c6eebe6b942d959ac51d1328ace6a471f8cec4)
+
 ## [1.1.0] - 2022-10-03
 
 ### Features
