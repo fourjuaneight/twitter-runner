@@ -63,6 +63,7 @@ export const handleCallback = async (ctx: Context) => {
     const currState = await getData<State>(ctx.env, 'state', 'search', {
       codeVerifier: code,
       state,
+      user,
     });
 
     if (state !== currState.state) {

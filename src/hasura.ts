@@ -27,13 +27,13 @@ interface HasuraErrors {
 export interface State {
   codeVerifier: string;
   state: string;
-  user?: string;
+  user: number;
 }
 
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
-  user: string;
+  user: number;
 }
 
 type Table = 'state' | 'tokens';
