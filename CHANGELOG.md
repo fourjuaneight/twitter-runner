@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2] - 2022-10-03
+
+### Bug Fixes
+
+- [Use dyname client id on auth endpoint.](https://github.com/fourjuaneight/twitter-auth/commit/51703cdbf544dabf63d9570bf4fd152775f242a9)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/30a3e8d65ceef51ae18ed2a3e76cb4f3ea339b62)
+
 ## [1.3.1] - 2022-10-03
 
 ### Bug Fixes
