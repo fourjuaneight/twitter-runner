@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2022-10-03
+
+### Features
+
+- [Update params and env to accept multiple users.](https://github.com/fourjuaneight/twitter-auth/commit/41ab06cf685d46cab8eb112f8a495146e57d482d)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/15c0bb6b7518a5ee49f6833eee0dc7be18e79f97)
+- [Minor linter config updates.](https://github.com/fourjuaneight/twitter-auth/commit/12abc0ebeb8141b9604436ff6d20594f6829fe01)
+
 ## [1.0.0] - 2022-10-01
 
 ### Bug Fixes
