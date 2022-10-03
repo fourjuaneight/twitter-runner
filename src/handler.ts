@@ -33,7 +33,7 @@ export const handleAuth = async (ctx: Context) => {
       });
     }
 
-    const clientID = user === 0 ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+    const clientID = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
     const state = generateRandomString(32);
     const code = generateRandomString(128);
     const codeHash = await createHash(code);
