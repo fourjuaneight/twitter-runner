@@ -48,12 +48,11 @@ export const authToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
-        request
+        response
       );
       throw `[fetch]: ${request.status} - ${
         request.statusText
-      }\n${JSON.stringify(request.body)}`;
+      } - ${response.error_description}`;
     }
 
     return response;
@@ -94,10 +93,9 @@ export const refreshToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
-        request
+        response
       );
-      throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
+      throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
 
     return response;
@@ -127,17 +125,15 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
       },
       body,
     });
-
-    await request.json();
+    const response: any = await request.json();
 
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
-        request
+        response
       );
-      throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
+      throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
 
     return;
