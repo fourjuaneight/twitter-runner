@@ -1,6 +1,6 @@
 export const createHash = async (str: string) => {
   try {
-    const encoder = new TextEncoder().encode(str);
+    const encoder = new TextEncoder();
     const data = encoder.encode(str);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashString = String.fromCharCode(...new Uint8Array(hashBuffer));
