@@ -5,6 +5,7 @@ import {
   handleAuth,
   handleCallback,
   handleRefresh,
+  handleRevoke,
 } from './handler';
 
 const app = new Hono();
@@ -18,7 +19,10 @@ app.get('/', async ctx => handleCallback(ctx));
 // get latest access token by user
 app.get('/access', async ctx => handleAccess(ctx));
 
-// refresh access token.
+// refresh access token
 app.get('/refresh', async ctx => handleRefresh(ctx));
+
+// revoke access token
+app.get('/revoke', async ctx => handleRevoke(ctx));
 
 export default app;

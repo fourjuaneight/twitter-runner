@@ -104,3 +104,42 @@ export const refreshToken = async (
     throw `[refreshToken]:\n${error}`;
   }
 };
+
+export const revokeToken = async (ctx: Context, token: string, user: User) => {
+  const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
+  const client_id =
+    user === 'fourjuaneight' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const params = {
+    token,
+    client_id,
+  };
+  const body = Object.entries(params)
+    .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+    .join('&');
+
+  try {
+    const request = await fetch(`${authURL}/revoke`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    });
+
+    await request.json();
+
+    if (request.status !== 200) {
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        params,
+        response
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
+    }
+
+    return;
+  } catch (error) {
+    console.log(`[revokeToken]:\n${error}`);
+    throw `[revokeToken]:\n${error}`;
+  }
+};

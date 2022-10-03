@@ -1,7 +1,7 @@
 import { Context } from 'hono';
 
 import { addData, getData, State, Tokens } from './hasura';
-import { authToken, refreshToken } from './twitter';
+import { authToken, refreshToken, revokeToken } from './twitter';
 import {
   createHash,
   escapeBase64Url,
@@ -183,6 +183,46 @@ export const handleRefresh = async (ctx: Context) => {
     ctx.status(200);
 
     return ctx.json({ accessToken: tokens.access_token, version });
+  } catch (error) {
+    ctx.status(500);
+
+    return ctx.json({ error, version });
+  }
+};
+
+export const handleRevoke = async (ctx: Context) => {
+  const authKey = ctx.env.AUTH_KEY;
+  const request = ctx.req;
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const key = searchParams.get('key');
+    const token = searchParams.get('token');
+    const user = searchParams.get('user');
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== authKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    await revokeToken(ctx, token, user);
+
+    ctx.status(200);
+
+    return ctx.json({
+      success: `Token '${token}' successfully revoked.`,
+      version,
+    });
   } catch (error) {
     ctx.status(500);
 
