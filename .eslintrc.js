@@ -53,13 +53,15 @@ module.exports = {
       'WithStatement',
       "BinaryExpression[operator='in']",
     ],
+    'no-shadow': 0,
     'no-throw-literal': 0,
     'prettier/prettier': ['error', prettierConf],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/no-useless-constructor': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
+    '@typescript-eslint/no-useless-constructor': 'off',
   },
   settings: {
     'import/resolver': {
