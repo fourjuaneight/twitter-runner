@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2022-10-03
+
+### Bug Fixes
+
+- [Add default user to callback.](https://github.com/fourjuaneight/twitter-auth/commit/26d72125f4ffafcce08bb21e620d5d68a0778fc2)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/a2bfe37619fa86d66c198e153858b20b21d43d0c)
+- [Update action to only build worker on release push.](https://github.com/fourjuaneight/twitter-auth/commit/9168a90f54ee1529cf7a0b67c64fe50c84279b3f)
+- [Log handler errors.](https://github.com/fourjuaneight/twitter-auth/commit/caee181562c9edebb645a69aaa527a523c514f6d)
+
 ## [1.3.2] - 2022-10-03
 
 ### Bug Fixes
