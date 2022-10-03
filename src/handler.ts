@@ -10,7 +10,7 @@ import {
 import { version } from '../package.json';
 
 export const handleAuth = async (ctx: Context) => {
-  const authKey = ctx.env.AUTH_KEY;
+  const { AUTH_KEY, CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const request = ctx.req;
 
   try {
@@ -25,7 +25,7 @@ export const handleAuth = async (ctx: Context) => {
         version,
       });
     }
-    if (key !== authKey) {
+    if (key !== AUTH_KEY) {
       ctx.status(400);
       return ctx.json({
         error: "You're not authorized to access this API.",
@@ -33,12 +33,13 @@ export const handleAuth = async (ctx: Context) => {
       });
     }
 
+    const clientID = user === 0 ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
     const state = generateRandomString(32);
     const code = generateRandomString(128);
     const codeHash = await createHash(code);
     const challenge = escapeBase64Url(codeHash);
     // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code
-    const url = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${ctx.env.TWEET_CLIENT_ID}&redirect_uri=${ctx.env.CALLBACK_URL}&scope=tweet.read%20tweet.write%20users.read%20offline.access&state=${state}&code_challenge=${challenge}&code_challenge_method=s256`;
+    const url = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${clientID}&redirect_uri=${CALLBACK_URL}&scope=tweet.read%20tweet.write%20users.read%20offline.access&state=${state}&code_challenge=${challenge}&code_challenge_method=s256`;
 
     await addData<State>(ctx.env, 'state', 'mutation', {
       codeVerifier: code,
