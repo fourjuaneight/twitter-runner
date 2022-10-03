@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2022-10-03
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/d4c491c3c1cc8e08fca0e31a7e6c454231970eca)
+- [Add twitter response error to response.](https://github.com/fourjuaneight/twitter-auth/commit/5e60fd2e6f84df12d7844962aba524d5e97e4a89)
+
 ## [1.4.1] - 2022-10-03
 
 ### Miscellaneous Tasks
