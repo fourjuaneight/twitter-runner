@@ -48,7 +48,8 @@ export const authToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
+        request
       );
       throw `[fetch]: ${request.status} - ${
         request.statusText
@@ -93,7 +94,8 @@ export const refreshToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
+        request
       );
       throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
     }
@@ -132,7 +134,8 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
+        request
       );
       throw `[fetch]: ${request.status} - ${request.statusText}\n${request.body}`;
     }
