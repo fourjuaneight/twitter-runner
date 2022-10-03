@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2022-10-03
+
+### Bug Fixes
+
+- [Remove deprecated method.](https://github.com/fourjuaneight/twitter-auth/commit/488828d032c4a210090914f6a873b61a52582030)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/abe2074a2003e90a736cfc8abb076eb31c88f589)
+
 ## [1.3.0] - 2022-10-03
 
 ### Features
