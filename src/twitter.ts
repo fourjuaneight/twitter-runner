@@ -22,7 +22,7 @@ export const authToken = async (
 ) => {
   const { CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const redirect_uri = CALLBACK_URL;
-  const client_id = user === 0 ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     code,
     grant_type: 'authorization_code',
@@ -69,7 +69,7 @@ export const refreshToken = async (
 ) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const client_id =
-    user === 'fourjuaneight' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+    user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     refresh_token,
     grant_type: 'refresh_token',
@@ -108,7 +108,7 @@ export const refreshToken = async (
 export const revokeToken = async (ctx: Context, token: string, user: User) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const client_id =
-    user === 'fourjuaneight' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+    user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     token,
     client_id,
