@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2022-10-03
+
+### Features
+
+- [Add token revoke endpoint.](https://github.com/fourjuaneight/twitter-auth/commit/f0ba05c5152314900491f3d80a2329fbd6314bdc)
+
+### Miscellaneous Tasks
+
+- [Minor syntax optimizations.](https://github.com/fourjuaneight/twitter-auth/commit/6653ec3f7a96043e4870d423e587b36647d91999)
+- [Return new token expiration time.](https://github.com/fourjuaneight/twitter-auth/commit/a4dac65631993e009a88938d747637d86d22404a)
+
+## [1.2.0] - 2022-10-03
+
+### Bug Fixes
+
+- [Add missing env var on refresh endpoint.](https://github.com/fourjuaneight/twitter-auth/commit/6abc3c474fc67ad66845b11fd1afe810bf8cb684)
+
+### Features
+
+- [Add access endpoint to get latest access token by user.](https://github.com/fourjuaneight/twitter-auth/commit/60531790538a848a59246aa991192f0509ea4311)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-auth/commit/099462d14fdb56b39fdac9a6ce3c2fa56ee1e5c5)
+- [Add app version to every response.](https://github.com/fourjuaneight/twitter-auth/commit/69769e6c542aaee353c121076411904e6268da58)
+- [Add better comments.](https://github.com/fourjuaneight/twitter-auth/commit/79b1abd4ac6f8631cce8ac58a5d66dc58475daac)
+- [Add links to twitter api docs.](https://github.com/fourjuaneight/twitter-auth/commit/2cdf5253f7a3311ee548245485da6a72eaba1519)
+- [Update twitter auth endpoint for reusability.](https://github.com/fourjuaneight/twitter-auth/commit/4d485d8bfc526078869401a5aae5f7eb093e48fa)
+
 ## [1.1.1] - 2022-10-03
 
 ### Bug Fixes
