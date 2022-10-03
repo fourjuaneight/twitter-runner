@@ -90,7 +90,7 @@ export const handleCallback = async (ctx: Context) => {
 
     ctx.status(200);
 
-    return ctx.json({ accessToken: tokens.access_token });
+    return ctx.json({ accessToken: tokens.access_token, version });
   } catch (error) {
     ctx.status(500);
 
@@ -137,7 +137,7 @@ export const handleRefresh = async (ctx: Context) => {
 
     ctx.status(200);
 
-    return ctx.json({ accessToken: tokens.access_token });
+    return ctx.json({ accessToken: tokens.access_token, version });
   } catch (error) {
     ctx.status(500);
 
