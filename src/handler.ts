@@ -37,6 +37,7 @@ export const handleAuth = async (ctx: Context) => {
     const code = generateRandomString(128);
     const codeHash = await createHash(code);
     const challenge = escapeBase64Url(codeHash);
+    // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code
     const url = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${ctx.env.TWEET_CLIENT_ID}&redirect_uri=${ctx.env.CALLBACK_URL}&scope=tweet.read%20tweet.write%20users.read%20offline.access&state=${state}&code_challenge=${challenge}&code_challenge_method=s256`;
 
     await addData<State>(ctx.env, 'state', 'mutation', {

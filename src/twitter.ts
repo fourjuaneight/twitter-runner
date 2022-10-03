@@ -11,6 +11,7 @@ interface AccessTokenResult {
 
 type User = 0 | 1 | 2;
 
+// DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/user-access-token
 const authURL = 'https://api.twitter.com/2/oauth2/token';
 
 export const authToken = async (
