@@ -93,6 +93,7 @@ export const handleCallback = async (ctx: Context) => {
 
     return ctx.json({
       accessToken: newTokens.access_token,
+      expires: newTokens.expires_in,
       version,
     });
   } catch (error) {
