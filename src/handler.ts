@@ -99,6 +99,7 @@ export const handleCallback = async (ctx: Context) => {
 };
 
 export const handleRefresh = async (ctx: Context) => {
+  const authKey = ctx.env.AUTH_KEY;
   const request = ctx.req;
 
   try {
