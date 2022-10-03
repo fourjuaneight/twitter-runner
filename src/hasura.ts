@@ -27,11 +27,13 @@ interface HasuraErrors {
 export interface State {
   codeVerifier: string;
   state: string;
+  user?: string;
 }
 
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
+  user: string;
 }
 
 type Table = 'state' | 'tokens';
@@ -46,6 +48,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
           meta_twitter_state(order_by: {created_at: desc}) {
             codeVerifier
             state
+            user
           }
         }
       `;
@@ -58,6 +61,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
           ) {
             codeVerifier
             state
+            user
           }
         }
       `;
@@ -67,6 +71,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
           meta_twitter_tokens(order_by: {created_at: desc}) {
             accessToken
             refreshToken
+            user
           }
         }
       `;
@@ -74,11 +79,12 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_tokens(
-            where: {refreshToken: {_eq: "${data.refreshToken}"}},
+            where: {accessToken: {_eq: "${data.accessToken}"}},
             order_by: {created_at: desc}
           ) {
             accessToken
             refreshToken
+            user
           }
         }
       `;
@@ -88,12 +94,14 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
           insert_meta_twitter_tokens_one(
             object: {
               accessToken: "${data.accessToken}",
-              refreshToken: "${data.refreshToken}"
+              refreshToken: "${data.refreshToken}",
+              user: "${data.user}"
             }
           ) {
             id
             accessToken
             refreshToken
+            user
           }
         }
       `;
@@ -103,12 +111,14 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
           insert_meta_twitter_state_one(
             object: {
               codeVerifier: "${data.codeVerifier}",
-              state: "${data.state}"
+              state: "${data.state}",
+              user: "${data.user}"
             }
           ) {
             id
             codeVerifier
             state
+            user
           }
         }
       `;

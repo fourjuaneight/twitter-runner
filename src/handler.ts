@@ -16,6 +16,7 @@ export const handleAuth = async (ctx: Context) => {
   try {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key');
+    const user = searchParams.get('user');
 
     if (!key) {
       ctx.status(400);
@@ -41,6 +42,7 @@ export const handleAuth = async (ctx: Context) => {
     await addData<State>(ctx.env, 'state', 'mutation', {
       codeVerifier: code,
       state,
+      user,
     });
 
     return ctx.redirect(url);
@@ -73,10 +75,16 @@ export const handleCallback = async (ctx: Context) => {
       });
     }
 
-    const tokens = await authToken(ctx, code, currState.codeVerifier);
+    const tokens = await authToken(
+      ctx,
+      code,
+      currState.codeVerifier,
+      currState.user
+    );
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token ?? '',
+      user: currState.user ?? '',
     });
 
     ctx.status(200);
@@ -95,6 +103,8 @@ export const handleRefresh = async (ctx: Context) => {
   try {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key');
+    const token = searchParams.get('token');
+    const user = searchParams.get('user');
 
     if (!key) {
       ctx.status(400);
@@ -112,13 +122,15 @@ export const handleRefresh = async (ctx: Context) => {
     }
 
     const currTokens = await getData<Tokens>(ctx.env, 'tokens', 'search', {
-      accessToken: '',
+      accessToken: token,
       refreshToken: '',
+      user,
     });
-    const tokens = await refreshToken(ctx, currTokens.refreshToken);
+    const tokens = await refreshToken(ctx, currTokens.refreshToken, user);
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token ?? '',
+      user,
     });
 
     ctx.status(200);

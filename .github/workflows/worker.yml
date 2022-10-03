@@ -43,13 +43,10 @@ jobs:
         run: npm run deploy
         env:
           AUTH_KEY: ${{ secrets.AUTH_KEY }}
+          CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
           HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
-          TWEET_APP_ID: ${{ secrets.TWEET_APP_ID }}
-          TWEET_CLIENT_ID: ${{ secrets.TWEET_CLIENT_ID }}
-          TWEET_CLIENT_SECRET: ${{ secrets.TWEET_CLIENT_SECRET }}
-          TWEET_PASSWORD: ${{ secrets.TWEET_PASSWORD }}
-          TWEET_USER_ID: ${{ secrets.TWEET_USER_ID }}
-          TWEET_USERNAME: ${{ secrets.TWEET_USERNAME }}
+          TWT_CLIENT_ID_0: ${{ secrets.TWT_CLIENT_ID_0 }}
+          TWT_CLIENT_ID_1: ${{ secrets.TWT_CLIENT_ID_1 }}

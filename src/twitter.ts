@@ -9,16 +9,19 @@ interface AccessTokenResult {
   refresh_token?: string;
 }
 
+type User = 0 | 1 | 2;
+
 const authURL = 'https://api.twitter.com/2/oauth2/token';
 
 export const authToken = async (
   ctx: Context,
   code: string,
-  code_verifier: string
+  code_verifier: string,
+  user: User
 ) => {
-  const { CALLBACK_URL, TWEET_CLIENT_ID } = ctx.env;
+  const { CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const redirect_uri = CALLBACK_URL;
-  const client_id = TWEET_CLIENT_ID;
+  const client_id = user === 0 ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     code,
     grant_type: 'authorization_code',
@@ -58,9 +61,14 @@ export const authToken = async (
   }
 };
 
-export const refreshToken = async (ctx: Context, refresh_token: string) => {
-  const { TWEET_CLIENT_ID } = ctx.env;
-  const client_id = TWEET_CLIENT_ID;
+export const refreshToken = async (
+  ctx: Context,
+  refresh_token: string,
+  user: User
+) => {
+  const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
+  const client_id =
+    user === 'fourjuaneight' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     refresh_token,
     grant_type: 'refresh_token',
