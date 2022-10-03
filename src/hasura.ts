@@ -45,7 +45,10 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
     case table === 'state' && type === 'query':
       return `
         query {
-          meta_twitter_state(order_by: {created_at: desc}) {
+          meta_twitter_state(
+            where: {user: {_eq: "${data.user}"}},
+            order_by: {created_at: desc}
+          ) {
             codeVerifier
             state
             user
@@ -68,7 +71,10 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
     case table === 'tokens' && type === 'query':
       return `
         query {
-          meta_twitter_tokens(order_by: {created_at: desc}) {
+          meta_twitter_tokens(
+            where: {user: {_eq: "${data.user}"}},
+            order_by: {created_at: desc}
+          ) {
             accessToken
             refreshToken
             user

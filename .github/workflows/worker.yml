@@ -42,6 +42,7 @@ jobs:
       - name: Publish
         run: npm run deploy
         env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           AUTH_KEY: ${{ secrets.AUTH_KEY }}
           CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

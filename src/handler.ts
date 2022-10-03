@@ -98,6 +98,50 @@ export const handleCallback = async (ctx: Context) => {
   }
 };
 
+export const handleAccess = async (ctx: Context) => {
+  const accessKey = ctx.env.ACCESS_KEY;
+  const request = ctx.req;
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const key = searchParams.get('key');
+    const user = searchParams.get('user');
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== accessKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    const currTokens = await getData<Tokens>(ctx.env, 'tokens', 'query', {
+      accessToken: '',
+      refreshToken: '',
+      user,
+    });
+
+    ctx.status(200);
+
+    return ctx.json({
+      accessToken: currTokens.accessToken,
+      refreshToken: currTokens.refreshToken,
+      version,
+    });
+  } catch (error) {
+    ctx.status(500);
+
+    return ctx.json({ error, version });
+  }
+};
+
 export const handleRefresh = async (ctx: Context) => {
   const authKey = ctx.env.AUTH_KEY;
   const request = ctx.req;
