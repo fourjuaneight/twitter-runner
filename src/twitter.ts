@@ -12,7 +12,7 @@ interface AccessTokenResult {
 type User = 0 | 1 | 2;
 
 // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/user-access-token
-const authURL = 'https://api.twitter.com/2/oauth2/token';
+const authURL = 'https://api.twitter.com/2/oauth2';
 
 export const authToken = async (
   ctx: Context,
@@ -35,7 +35,7 @@ export const authToken = async (
     .join('&');
 
   try {
-    const request = await fetch(authURL, {
+    const request = await fetch(`${authURL}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -80,7 +80,7 @@ export const refreshToken = async (
     .join('&');
 
   try {
-    const request = await fetch(authURL, {
+    const request = await fetch(`${authURL}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
