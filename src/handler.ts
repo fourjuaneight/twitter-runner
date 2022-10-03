@@ -99,7 +99,7 @@ export const handleCallback = async (ctx: Context) => {
     });
   } catch (error) {
     ctx.status(500);
-
+    console.log({ error, version });
     return ctx.json({ error, version });
   }
 };
@@ -143,7 +143,7 @@ export const handleAccess = async (ctx: Context) => {
     });
   } catch (error) {
     ctx.status(500);
-
+    console.log({ error, version });
     return ctx.json({ error, version });
   }
 };
@@ -190,7 +190,7 @@ export const handleRefresh = async (ctx: Context) => {
     return ctx.json({ accessToken: newTokens.access_token, version });
   } catch (error) {
     ctx.status(500);
-
+    console.log({ error, version });
     return ctx.json({ error, version });
   }
 };
@@ -230,7 +230,7 @@ export const handleRevoke = async (ctx: Context) => {
     });
   } catch (error) {
     ctx.status(500);
-
+    console.log({ error, version });
     return ctx.json({ error, version });
   }
 };
