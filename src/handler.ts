@@ -77,21 +77,24 @@ export const handleCallback = async (ctx: Context) => {
       });
     }
 
-    const tokens = await authToken(
+    const newTokens = await authToken(
       ctx,
       code,
       currState.codeVerifier,
       currState.user
     );
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token ?? '',
+      accessToken: newTokens.access_token,
+      refreshToken: newTokens.refresh_token ?? '',
       user: currState.user ?? '',
     });
 
     ctx.status(200);
 
-    return ctx.json({ accessToken: tokens.access_token, version });
+    return ctx.json({
+      accessToken: newTokens.access_token,
+      version,
+    });
   } catch (error) {
     ctx.status(500);
 
@@ -173,16 +176,16 @@ export const handleRefresh = async (ctx: Context) => {
       refreshToken: '',
       user,
     });
-    const tokens = await refreshToken(ctx, currTokens.refreshToken, user);
+    const newTokens = await refreshToken(ctx, currTokens.refreshToken, user);
     await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token ?? '',
+      accessToken: newTokens.access_token,
+      refreshToken: newTokens.refresh_token ?? '',
       user,
     });
 
     ctx.status(200);
 
-    return ctx.json({ accessToken: tokens.access_token, version });
+    return ctx.json({ accessToken: newTokens.access_token, version });
   } catch (error) {
     ctx.status(500);
 
