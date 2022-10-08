@@ -1,6 +1,6 @@
 import { Context } from 'hono';
 
-import { addData, getData, State, Tokens } from './hasura';
+import { addData, addPrompt, getData, State, Tokens } from './hasura';
 import { authToken, refreshToken, revokeToken, tweet } from './twitter';
 import {
   createHash,
@@ -17,6 +17,12 @@ interface AuthPayload {
 
 interface TweetPayload extends AuthPayload {
   body: string;
+}
+
+interface PromptPayload {
+  key: string;
+  table: string;
+  prompt: string;
 }
 
 export const handleAuth = async (ctx: Context) => {
@@ -274,6 +280,43 @@ export const handleTweet = async (ctx: Context) => {
       success: 'Tweet posted and token refreshed.',
       accessToken: newTokens.access_token,
       id: post,
+      version,
+    });
+  } catch (error) {
+    ctx.status(500);
+    console.log({ error, version });
+    return ctx.json({ error, version });
+  }
+};
+
+export const handlePrompt = async (ctx: Context) => {
+  const authKey = ctx.env.AUTH_KEY;
+
+  try {
+    const { key, table, prompt } = await ctx.req.json<PromptPayload>();
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== authKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    const newPrompt = await addPrompt(ctx, table, prompt);
+
+    ctx.status(200);
+
+    return ctx.json({
+      success: 'Prompt saved successfully.',
+      id: newPrompt,
       version,
     });
   } catch (error) {
