@@ -54,3 +54,4 @@ jobs:
           HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
           TWT_CLIENT_ID_0: ${{ secrets.TWT_CLIENT_ID_0 }}
           TWT_CLIENT_ID_1: ${{ secrets.TWT_CLIENT_ID_1 }}
+          TWT_TOKEN: ${{ secrets.TWT_TOKEN }}

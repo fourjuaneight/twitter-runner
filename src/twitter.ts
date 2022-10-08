@@ -206,13 +206,13 @@ export const details = async (
   ctx: Context,
   id: string
 ): Promise<TwitterData> => {
-  const { TWITTER_KEY } = ctx.env;
+  const { TWT_TOKEN } = ctx.env;
   try {
     const request = await fetch(
       `https://api.twitter.com/2/tweets/${id}?tweet.fields=created_at&user.fields=username&expansions=author_id`,
       {
         headers: {
-          Authorization: `Bearer ${TWITTER_KEY}`,
+          Authorization: `Bearer ${TWT_TOKEN}`,
           'Content-Type': 'application/json',
         },
       }
