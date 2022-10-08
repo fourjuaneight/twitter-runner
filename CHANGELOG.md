@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2022-10-08
+
+### Bug Fixes
+
+- [Check for user as string.](https://github.com/fourjuaneight/twitter-runner/commit/f850d8a1ff1f4621f6ebf6be3ce743cae4c26ba1)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/e555052ad775fff4b4a857f1a2f87c616ee08500)
+- [**breaking**] [Update repo name.](https://github.com/fourjuaneight/twitter-runner/commit/b7b7b360b2aec2fceaa07d63c61ff1aff7964fc6)
+
 ## [1.4.2] - 2022-10-03
 
 ### Miscellaneous Tasks
