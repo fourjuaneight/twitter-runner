@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2022-10-08
+
+### Features
+
+- [Add endpoint to save prompts to openai.](https://github.com/fourjuaneight/twitter-runner/commit/78b20fabc520d9f23413073b9732bd172eeac66b)
+- [Add endpoint to retrive tweet details.](https://github.com/fourjuaneight/twitter-runner/commit/46dd1dda88ab6cd35d763697d6abbc21c4ae0368)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/dfd8e649278263b3bb509afc124445087c488a6f)
+
 ## [1.6.0] - 2022-10-08
 
 ### Features
