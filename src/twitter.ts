@@ -16,6 +16,29 @@ interface TweetPosted {
   };
 }
 
+interface TwitterResponse {
+  data: {
+    author_id: string;
+    created_at: string;
+    text: string;
+    id: string;
+  };
+  includes: {
+    users: {
+      verified: boolean;
+      username: string;
+      id: string;
+      name: string;
+    }[];
+  };
+}
+
+interface TwitterData {
+  tweet: string;
+  user: string;
+  url: string;
+}
+
 type User = 0 | 1 | 2;
 
 const URL = 'https://api.twitter.com/2';
@@ -176,5 +199,47 @@ export const tweet = async (token: string, text: string) => {
   } catch (error) {
     console.log(`[tweet]:\n${error}`);
     throw `[tweet]:\n${error}`;
+  }
+};
+
+export const details = async (
+  ctx: Context,
+  id: string
+): Promise<TwitterData> => {
+  const { TWITTER_KEY } = ctx.env;
+  try {
+    const request = await fetch(
+      `https://api.twitter.com/2/tweets/${id}?tweet.fields=created_at&user.fields=username&expansions=author_id`,
+      {
+        headers: {
+          Authorization: `Bearer ${TWITTER_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const response: TwitterResponse = await request.json();
+
+    if (request.status !== 200) {
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        response
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText}`;
+    }
+
+    const { username } = response.includes.users[0];
+    const text = response.data.text
+      .replace(/[‘’]+/g, `'`)
+      .replace(/[“”]+/g, `"`)
+      .replace(/(https:\/\/t.co\/[a-zA-z0-9]+)/g, '');
+
+    return {
+      tweet: text,
+      user: `@${username}`,
+      url: `https://twitter.com/${username}/status/${response.data.id}`,
+    };
+  } catch (error) {
+    console.log(`[details] - ${error}`);
+    throw `[details] - ${error}`;
   }
 };

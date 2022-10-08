@@ -4,6 +4,7 @@ import {
   handleAccess,
   handleAuth,
   handleCallback,
+  handleDetails,
   handlePrompt,
   handleRefresh,
   handleRevoke,
@@ -32,5 +33,8 @@ app.post('/tweet', async ctx => handleTweet(ctx));
 
 // save prompt
 app.post('/prompt', async ctx => handlePrompt(ctx));
+
+// get tweet details
+app.post('/details', async ctx => handleDetails(ctx));
 
 export default app;
