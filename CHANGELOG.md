@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2022-10-08
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/bdb4bcdd149417175a5bd068d0100adf8455b0d5)
+- [Add twitter token to CI builder.](https://github.com/fourjuaneight/twitter-runner/commit/ba14553710c4c567dc0d57be6ca74592cb47116c)
+
 ## [2.0.0] - 2022-10-08
 
 ### Features
