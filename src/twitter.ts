@@ -9,10 +9,20 @@ interface AccessTokenResult {
   refresh_token?: string;
 }
 
+interface TweetPosted {
+  data: {
+    id: string;
+    text: string;
+  };
+}
+
 type User = 0 | 1 | 2;
 
+const URL = 'https://api.twitter.com/2';
 // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/user-access-token
-const authURL = 'https://api.twitter.com/2/oauth2';
+const AUTH = `${URL}/oauth2`;
+// DOCS: https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
+const TWEET = `${URL}/tweets`;
 
 export const authToken = async (
   ctx: Context,
@@ -35,7 +45,7 @@ export const authToken = async (
     .join('&');
 
   try {
-    const request = await fetch(`${authURL}/token`, {
+    const request = await fetch(`${AUTH}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -77,7 +87,7 @@ export const refreshToken = async (
     .join('&');
 
   try {
-    const request = await fetch(`${authURL}/token`, {
+    const request = await fetch(`${AUTH}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -114,7 +124,7 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
     .join('&');
 
   try {
-    const request = await fetch(`${authURL}/revoke`, {
+    const request = await fetch(`${AUTH}/revoke`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -136,5 +146,35 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
   } catch (error) {
     console.log(`[revokeToken]:\n${error}`);
     throw `[revokeToken]:\n${error}`;
+  }
+};
+
+export const tweet = async (token: string, text: string) => {
+  try {
+    const request = await fetch(TWEET, {
+      method: 'POST',
+      headers: {
+        Authorization: `OAuth ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: {
+        text,
+      },
+    });
+    const response: TweetPosted = await request.json();
+
+    if (request.status !== 200) {
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        params,
+        response
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
+    }
+
+    return response.data.id;
+  } catch (error) {
+    console.log(`[tweet]:\n${error}`);
+    throw `[tweet]:\n${error}`;
   }
 };
