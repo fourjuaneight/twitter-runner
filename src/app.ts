@@ -20,9 +20,9 @@ app.get('/', async ctx => handleCallback(ctx));
 app.get('/access', async ctx => handleAccess(ctx));
 
 // refresh access token
-app.get('/refresh', async ctx => handleRefresh(ctx));
+app.post('/refresh', async ctx => handleRefresh(ctx));
 
 // revoke access token
-app.get('/revoke', async ctx => handleRevoke(ctx));
+app.post('/revoke', async ctx => handleRevoke(ctx));
 
 export default app;

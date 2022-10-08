@@ -50,9 +50,7 @@ export const authToken = async (
         params,
         response
       );
-      throw `[fetch]: ${request.status} - ${
-        request.statusText
-      } - ${response.error_description}`;
+      throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
 
     return response;
@@ -68,8 +66,7 @@ export const refreshToken = async (
   user: User
 ) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
-  const client_id =
-    user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     refresh_token,
     grant_type: 'refresh_token',
@@ -107,8 +104,7 @@ export const refreshToken = async (
 
 export const revokeToken = async (ctx: Context, token: string, user: User) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
-  const client_id =
-    user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     token,
     client_id,

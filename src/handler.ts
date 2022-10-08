@@ -9,6 +9,12 @@ import {
 } from './encryption';
 import { version } from '../package.json';
 
+interface AuthBody {
+  key: string;
+  token: string;
+  user: string;
+}
+
 export const handleAuth = async (ctx: Context) => {
   const { AUTH_KEY, CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const request = ctx.req;
@@ -150,13 +156,9 @@ export const handleAccess = async (ctx: Context) => {
 
 export const handleRefresh = async (ctx: Context) => {
   const authKey = ctx.env.AUTH_KEY;
-  const request = ctx.req;
 
   try {
-    const { searchParams } = new URL(request.url);
-    const key = searchParams.get('key');
-    const token = searchParams.get('token');
-    const user = searchParams.get('user');
+    const { key, token, user } = await ctx.req.json<AuthBody>();
 
     if (!key) {
       ctx.status(400);
@@ -197,13 +199,9 @@ export const handleRefresh = async (ctx: Context) => {
 
 export const handleRevoke = async (ctx: Context) => {
   const authKey = ctx.env.AUTH_KEY;
-  const request = ctx.req;
 
   try {
-    const { searchParams } = new URL(request.url);
-    const key = searchParams.get('key');
-    const token = searchParams.get('token');
-    const user = searchParams.get('user');
+    const { key, token, user } = await ctx.req.json<AuthBody>();
 
     if (!key) {
       ctx.status(400);
