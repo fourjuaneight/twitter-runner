@@ -1,7 +1,7 @@
 {
-  "name": "twitter-auth",
+  "name": "twitter-runner",
   "version": "1.4.3",
-  "description": "Serverless function to generate Twitter auth tokens on demand.",
+  "description": "Serverless function to generate Twitter auth tokens and automate tweets.",
   "main": "src/app.ts",
   "private": true,
   "scripts": {
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fourjuaneight/twitter-auth.git"
+    "url": "git+https://github.com/fourjuaneight/twitter-runner.git"
   },
   "author": "Juan Villela",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fourjuaneight/twitter-auth/issues"
+    "url": "https://github.com/fourjuaneight/twitter-runner/issues"
   },
-  "homepage": "https://github.com/fourjuaneight/twitter-auth#readme",
+  "homepage": "https://github.com/fourjuaneight/twitter-runner#readme",
   "lint-staged": {
     "*.ts": [
       "npm run format",

@@ -1,6 +1,6 @@
 # Twitter Auth
 
-![worker](https://github.com/fourjuaneight/twitter-auth/actions/workflows/worker.yml/badge.svg)<br/>
+![worker](https://github.com/fourjuaneight/twitter-runner/actions/workflows/worker.yml/badge.svg)<br/>
 
 This function is deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/). But can quickly be tweaked to work with [Deno Deploy](https://deno.com/deploy/docs).
 
