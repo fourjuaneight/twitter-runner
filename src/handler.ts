@@ -1,7 +1,7 @@
 import { Context } from 'hono';
 
 import { addData, getData, State, Tokens } from './hasura';
-import { authToken, refreshToken, revokeToken } from './twitter';
+import { authToken, refreshToken, revokeToken, tweet } from './twitter';
 import {
   createHash,
   escapeBase64Url,
@@ -9,10 +9,14 @@ import {
 } from './encryption';
 import { version } from '../package.json';
 
-interface AuthBody {
+interface AuthPayload {
   key: string;
   token: string;
   user: string;
+}
+
+interface TweetPayload extends AuthPayload {
+  body: string;
 }
 
 export const handleAuth = async (ctx: Context) => {
@@ -158,7 +162,7 @@ export const handleRefresh = async (ctx: Context) => {
   const authKey = ctx.env.AUTH_KEY;
 
   try {
-    const { key, token, user } = await ctx.req.json<AuthBody>();
+    const { key, token, user } = await ctx.req.json<AuthPayload>();
 
     if (!key) {
       ctx.status(400);
@@ -201,7 +205,7 @@ export const handleRevoke = async (ctx: Context) => {
   const authKey = ctx.env.AUTH_KEY;
 
   try {
-    const { key, token, user } = await ctx.req.json<AuthBody>();
+    const { key, token, user } = await ctx.req.json<AuthPayload>();
 
     if (!key) {
       ctx.status(400);
@@ -224,6 +228,52 @@ export const handleRevoke = async (ctx: Context) => {
 
     return ctx.json({
       success: `Token '${token}' successfully revoked.`,
+      version,
+    });
+  } catch (error) {
+    ctx.status(500);
+    console.log({ error, version });
+    return ctx.json({ error, version });
+  }
+};
+
+export const handleTweet = async (ctx: Context) => {
+  const authKey = ctx.env.AUTH_KEY;
+
+  try {
+    const { key, token, user, body } = await ctx.req.json<TweetPayload>();
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== authKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    const newTokens = await refreshToken(ctx, token, user);
+
+    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+      accessToken: newTokens.access_token,
+      refreshToken: newTokens.refresh_token ?? '',
+      user,
+    });
+
+    const post = await tweet(newTokens.access_token, body);
+
+    ctx.status(200);
+
+    return ctx.json({
+      success: 'Tweet posted and token refreshed.',
+      accessToken: newTokens.access_token,
+      id: post,
       version,
     });
   } catch (error) {

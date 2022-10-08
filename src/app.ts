@@ -6,6 +6,7 @@ import {
   handleCallback,
   handleRefresh,
   handleRevoke,
+  handleTweet,
 } from './handler';
 
 const app = new Hono();
@@ -24,5 +25,8 @@ app.post('/refresh', async ctx => handleRefresh(ctx));
 
 // revoke access token
 app.post('/revoke', async ctx => handleRevoke(ctx));
+
+// post tweet
+app.post('/tweet', async ctx => handleTweet(ctx));
 
 export default app;
