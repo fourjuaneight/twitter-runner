@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2022-10-08
+
+### Features
+
+- [Update refresh and revoke endpoints as post requests.](https://github.com/fourjuaneight/twitter-runner/commit/92e74c0823037033059d095c70daaced3709478c)
+- [Add method to post tweets.](https://github.com/fourjuaneight/twitter-runner/commit/99a83a4a20d9f0ca80e5e7755d947f773711aa29)
+- [Add endpoint to post tweets.](https://github.com/fourjuaneight/twitter-runner/commit/5cbb46bd315a3ddc272b3e1a217479dc284e8706)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/f69712eab4fd145c57eaacfb234c116848bebb87)
+- [Update project description.](https://github.com/fourjuaneight/twitter-runner/commit/4bdd7097535284917ad0eec0a89800e7d32ba5b7)
+
 ## [1.5.0] - 2022-10-08
 
 ### Bug Fixes
