@@ -232,8 +232,8 @@ export const addPrompt = async (
   prompt: string
 ): Promise<string> => {
   const query = `
-    mutation {
-      insert_models_${table}_one(object: {prompt: "${prompt}"}) {
+    mutation addPrompt($prompt: String!) {
+      insert_models_${table}_one(object: {prompt: $prompt}) {
         id
       }
     }
@@ -246,7 +246,12 @@ export const addPrompt = async (
         'Content-Type': 'application/json',
         'X-Hasura-Admin-Secret': `${ctx.env.HASURA_ADMIN_SECRET}`,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({
+        query,
+        variables: {
+          prompt,
+        },
+      }),
     });
     const response: HasuraInsertResp | HasuraErrors = await request.json();
 
