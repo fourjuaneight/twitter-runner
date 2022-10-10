@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1] - 2022-10-10
+
+### Bug Fixes
+
+- [Update hasura methods to take in context for env vars.](https://github.com/fourjuaneight/twitter-runner/commit/5f41f8d3fab2974f410d24e1303fc333b34d80f3)
+- [Use gql variables on prompt request for better formatting.](https://github.com/fourjuaneight/twitter-runner/commit/5cefd68a09ec30bc98086074c49ef33b95f51ca7)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/a6e0b9cba42b69863f5e839bec55ae28f986aee2)
+
 ## [2.1.0] - 2022-10-08
 
 ### Miscellaneous Tasks
