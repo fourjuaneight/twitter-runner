@@ -68,7 +68,7 @@ export const handleAuth = async (ctx: Context) => {
     // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code
     const url = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${clientID}&redirect_uri=${CALLBACK_URL}&scope=tweet.read%20tweet.write%20users.read%20offline.access&state=${state}&code_challenge=${challenge}&code_challenge_method=s256`;
 
-    await addData<State>(ctx.env, 'state', 'mutation', {
+    await addData<State>(ctx, 'state', 'mutation', {
       codeVerifier: code,
       state,
       user,
@@ -89,7 +89,7 @@ export const handleCallback = async (ctx: Context) => {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
     const state = searchParams.get('state');
-    const currState = await getData<State>(ctx.env, 'state', 'search', {
+    const currState = await getData<State>(ctx, 'state', 'search', {
       codeVerifier: code,
       state,
       user: 0,
@@ -111,7 +111,7 @@ export const handleCallback = async (ctx: Context) => {
       currState.codeVerifier,
       currState.user
     );
-    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+    await addData<Tokens>(ctx, 'tokens', 'mutation', {
       accessToken: newTokens.access_token,
       refreshToken: newTokens.refresh_token ?? '',
       user: currState.user ?? '',
@@ -155,7 +155,7 @@ export const handleAccess = async (ctx: Context) => {
       });
     }
 
-    const currTokens = await getData<Tokens>(ctx.env, 'tokens', 'query', {
+    const currTokens = await getData<Tokens>(ctx, 'tokens', 'query', {
       accessToken: '',
       refreshToken: '',
       user,
@@ -196,13 +196,13 @@ export const handleRefresh = async (ctx: Context) => {
       });
     }
 
-    const currTokens = await getData<Tokens>(ctx.env, 'tokens', 'search', {
+    const currTokens = await getData<Tokens>(ctx, 'tokens', 'search', {
       accessToken: token,
       refreshToken: '',
       user,
     });
     const newTokens = await refreshToken(ctx, currTokens.refreshToken, user);
-    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+    await addData<Tokens>(ctx, 'tokens', 'mutation', {
       accessToken: newTokens.access_token,
       refreshToken: newTokens.refresh_token ?? '',
       user,
@@ -277,7 +277,7 @@ export const handleTweet = async (ctx: Context) => {
 
     const newTokens = await refreshToken(ctx, token, user);
 
-    await addData<Tokens>(ctx.env, 'tokens', 'mutation', {
+    await addData<Tokens>(ctx, 'tokens', 'mutation', {
       accessToken: newTokens.access_token,
       refreshToken: newTokens.refresh_token ?? '',
       user,
