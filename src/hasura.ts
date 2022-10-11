@@ -225,7 +225,7 @@ export const getData = async <D extends unkown>(
   }
 };
 
-// Upload code and state to Hasura.
+// Upload prompts to Hasura.
 export const addPrompt = async (
   ctx: Context,
   table: string,
@@ -274,6 +274,60 @@ export const addPrompt = async (
     }
 
     return (response as HasuraInsertResp).data[`insert_models_${table}_one`].id;
+  } catch (error) {
+    console.log(`[addPrompt][${table}]:\n${error}`);
+    throw `[addPrompt][${table}]:\n${error}`;
+  }
+};
+
+// Get prompts Hasura.
+export const getPrompts = async (
+  ctx: Context,
+  table: string,
+): Promise<string[]> => {
+  const query = `
+    {
+      models_${table} {
+        prompt
+      }
+    }
+  `;
+
+  try {
+    const request = await fetch(`${ctx.env.HASURA_ENDPOINT}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Hasura-Admin-Secret': `${ctx.env.HASURA_ADMIN_SECRET}`,
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    });
+    const response: HasuraQueryResp | HasuraErrors = await request.json();
+
+    if (request.status !== 200) {
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        response,
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText}`;
+    }
+
+    if (response.errors) {
+      const { errors } = response as HasuraErrors;
+      const errLog = errors
+        .map((err) => `${err.extensions.path}: ${err.message}`)
+        .join('\n');
+
+      console.log(`[hasura]:\n${errLog}`, { query });
+      throw `[hasura]:\n${errLog}\n${query}`;
+    }
+    const list = (response as HasuraQueryResp).data[`models_${table}`].map(
+      (row) => row.prompt,
+    );
+
+    return list;
   } catch (error) {
     console.log(`[addPrompt][${table}]:\n${error}`);
     throw `[addPrompt][${table}]:\n${error}`;

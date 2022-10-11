@@ -1,6 +1,6 @@
 import { Context } from 'hono';
 
-import { addData, addPrompt, getData, State, Tokens } from './hasura';
+import { addData, addPrompt, getData, getPrompts, State, Tokens } from './hasura';
 import {
   authToken,
   details,
@@ -328,6 +328,45 @@ export const handlePrompt = async (ctx: Context) => {
     return ctx.json({
       success: 'Prompt saved successfully.',
       id: newPrompt,
+      version,
+    });
+  } catch (error) {
+    ctx.status(500);
+    console.log({ error, version });
+    return ctx.json({ error, version });
+  }
+};
+
+export const handlePromptsList = async (ctx: Context) => {
+  const accessKey = ctx.env.ACCESS_KEY;
+  const request = ctx.req;
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const key = searchParams.get('key');
+    const table = searchParams.get('table');
+
+    if (!key) {
+      ctx.status(400);
+      return ctx.json({
+        error: "Missing 'Key' header.",
+        version,
+      });
+    }
+    if (key !== accessKey) {
+      ctx.status(400);
+      return ctx.json({
+        error: "You're not authorized to access this API.",
+        version,
+      });
+    }
+
+    const prompts = await getPrompts(ctx, table);
+
+    ctx.status(200);
+
+    return ctx.json({
+      prompts,
       version,
     });
   } catch (error) {

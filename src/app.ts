@@ -6,6 +6,7 @@ import {
   handleCallback,
   handleDetails,
   handlePrompt,
+  handlePromptsList,
   handleRefresh,
   handleRevoke,
   handleTweet,
@@ -33,6 +34,9 @@ app.post('/tweet', async (ctx) => handleTweet(ctx));
 
 // save prompt
 app.post('/prompt', async (ctx) => handlePrompt(ctx));
+
+// save prompt
+app.get('/prompts', async (ctx) => handlePromptsList(ctx));
 
 // get tweet details
 app.post('/details', async (ctx) => handleDetails(ctx));
