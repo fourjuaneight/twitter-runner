@@ -10,8 +10,8 @@
     "clean:node": "rm -rf node_modules",
     "dev": "wrangler dev src/app.ts",
     "deploy": "wrangler publish src/app.ts",
-    "format": "rome format assets/**/*.ts",
-    "lint": "rome ci assets/**/*.ts"
+    "format": "rome format src/*.ts",
+    "lint": "rome ci src/*.ts"
   },
   "repository": {
     "type": "git",

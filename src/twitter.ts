@@ -51,7 +51,7 @@ export const authToken = async (
   ctx: Context,
   code: string,
   code_verifier: string,
-  user: User
+  user: User,
 ) => {
   const { CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const redirect_uri = CALLBACK_URL;
@@ -81,7 +81,7 @@ export const authToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -96,7 +96,7 @@ export const authToken = async (
 export const refreshToken = async (
   ctx: Context,
   refresh_token: string,
-  user: User
+  user: User,
 ) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
@@ -123,7 +123,7 @@ export const refreshToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -160,7 +160,7 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -190,7 +190,7 @@ export const tweet = async (token: string, text: string) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -204,7 +204,7 @@ export const tweet = async (token: string, text: string) => {
 
 export const details = async (
   ctx: Context,
-  id: string
+  id: string,
 ): Promise<TwitterData> => {
   const { TWT_TOKEN } = ctx.env;
   try {
@@ -215,14 +215,14 @@ export const details = async (
           Authorization: `Bearer ${TWT_TOKEN}`,
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     const response: TwitterResponse = await request.json();
 
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
@@ -230,7 +230,7 @@ export const details = async (
     const { username } = response.includes.users[0];
     const text = response.data.text
       .replace(/[‘’]+/g, `'`)
-      .replace(/[“”]+/g, `"`)
+      .replace(/[“”]+/g, `'`)
       .replace(/(https:\/\/t.co\/[a-zA-z0-9]+)/g, '');
 
     return {

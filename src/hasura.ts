@@ -48,7 +48,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_state(
-            where: {user: {_eq: "${data.user}"}},
+            where: {user: {_eq: '${data.user}'}},
             order_by: {created_at: desc}
           ) {
             codeVerifier
@@ -61,7 +61,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_state(
-            where: {state: {_eq: "${data.state}"}},
+            where: {state: {_eq: '${data.state}'}},
             order_by: {created_at: desc}
           ) {
             codeVerifier
@@ -74,7 +74,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_tokens(
-            where: {user: {_eq: "${data.user}"}},
+            where: {user: {_eq: '${data.user}'}},
             order_by: {created_at: desc}
           ) {
             accessToken
@@ -87,7 +87,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_tokens(
-            where: {accessToken: {_eq: "${data.accessToken}"}},
+            where: {accessToken: {_eq: '${data.accessToken}'}},
             order_by: {created_at: desc}
           ) {
             accessToken
@@ -101,9 +101,9 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
         mutation {
           insert_meta_twitter_tokens_one(
             object: {
-              accessToken: "${data.accessToken}",
-              refreshToken: "${data.refreshToken}",
-              user: "${data.user}"
+              accessToken: '${data.accessToken}',
+              refreshToken: '${data.refreshToken}',
+              user: '${data.user}'
             }
           ) {
             id
@@ -118,9 +118,9 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
         mutation {
           insert_meta_twitter_state_one(
             object: {
-              codeVerifier: "${data.codeVerifier}",
-              state: "${data.state}",
-              user: "${data.user}"
+              codeVerifier: '${data.codeVerifier}',
+              state: '${data.state}',
+              user: '${data.user}'
             }
           ) {
             id
@@ -138,7 +138,7 @@ export const addData = async <D extends unkown>(
   ctx: Context,
   table: Table,
   type: Type,
-  data: D
+  data: D,
 ): Promise<D> => {
   const query = getQuery<D>(table, type, data);
 
@@ -156,7 +156,7 @@ export const addData = async <D extends unkown>(
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
@@ -164,7 +164,7 @@ export const addData = async <D extends unkown>(
     if (response.errors) {
       const { errors } = response as HasuraErrors;
       const errLog = errors
-        .map(err => `${err.extensions.path}: ${err.message}`)
+        .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
       console.log(`[hasura]:\n${errLog}`, { query });
@@ -185,7 +185,7 @@ export const getData = async <D extends unkown>(
   ctx: Context,
   table: Table,
   type: Type,
-  data: D
+  data: D,
 ): Promise<D> => {
   const query = getQuery<D>(table, type, data);
 
@@ -203,7 +203,7 @@ export const getData = async <D extends unkown>(
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
@@ -211,7 +211,7 @@ export const getData = async <D extends unkown>(
     if (response.errors) {
       const { errors } = response as HasuraErrors;
       const errLog = errors
-        .map(err => `${err.extensions.path}: ${err.message}`)
+        .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
       console.log(`[hasura]:\n${errLog}`, { query });
@@ -229,7 +229,7 @@ export const getData = async <D extends unkown>(
 export const addPrompt = async (
   ctx: Context,
   table: string,
-  prompt: string
+  prompt: string,
 ): Promise<string> => {
   const query = `
     mutation addPrompt($prompt: String!) {
@@ -258,7 +258,7 @@ export const addPrompt = async (
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        response
+        response,
       );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
@@ -266,7 +266,7 @@ export const addPrompt = async (
     if (response.errors) {
       const { errors } = response as HasuraErrors;
       const errLog = errors
-        .map(err => `${err.extensions.path}: ${err.message}`)
+        .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
       console.log(`[hasura]:\n${errLog}`, { query });

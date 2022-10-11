@@ -109,7 +109,7 @@ export const handleCallback = async (ctx: Context) => {
       ctx,
       code,
       currState.codeVerifier,
-      currState.user
+      currState.user,
     );
     await addData<Tokens>(ctx, 'tokens', 'mutation', {
       accessToken: newTokens.access_token,
