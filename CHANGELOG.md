@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2022-10-11
+
+### Bug Fixes
+
+- [Minor formatting updates.](https://github.com/fourjuaneight/twitter-runner/commit/e6972d35c34a2ca5e6053265bf28063e9c664f87)
+
+### Features
+
+- [Add endpoint to get all prompts from model table.](https://github.com/fourjuaneight/twitter-runner/commit/593af305c630f40fe32c8e02bbfc235c1bfee32b)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/c779e062ca95a1911ea3eab0a49551e9aeafa0a0)
+- [Replace eslint and prittier with rome.](https://github.com/fourjuaneight/twitter-runner/commit/95835ce969d0f95a98467002219cd48544d2ae21)
+- [Minor script updates.](https://github.com/fourjuaneight/twitter-runner/commit/ce20648260b1b503296c6ac6775680f7a86c01b6)
+
 ## [2.1.1] - 2022-10-10
 
 ### Bug Fixes
