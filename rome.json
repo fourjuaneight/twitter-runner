@@ -1,0 +1,75 @@
+{
+  "formatter": {
+    "ignore": [
+      ".cache",
+      ".env",
+      ".gatsby-context.js",
+      ".lock-wscript",
+      ".netlify",
+      ".sass-cache",
+      "*.log",
+      "*.pid",
+      "*.seed",
+      ".eslintrc.js",
+      "prettier.config.js",
+      "vite.config.ts",
+      "build",
+      "coverage",
+      "cypress/screenshots",
+      "cypress/videos",
+      "dist",
+      "dist-ssr",
+      "lib-cov",
+      "logs",
+      "node_modules",
+      "pids",
+      "public",
+      "assets/css/tailwind.css",
+      "assets/css/tw.css",
+      "assets/js",
+      "assets/*.js"
+    ],
+    "indentSize": 2,
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": [
+      ".cache",
+      ".env",
+      ".gatsby-context.js",
+      ".lock-wscript",
+      ".netlify",
+      ".sass-cache",
+      "*.log",
+      "*.pid",
+      "*.seed",
+      ".eslintrc.js",
+      "prettier.config.js",
+      "vite.config.ts",
+      "build",
+      "coverage",
+      "cypress/screenshots",
+      "cypress/videos",
+      "dist",
+      "dist-ssr",
+      "lib-cov",
+      "logs",
+      "node_modules",
+      "pids",
+      "public",
+      "assets/css/tailwind.css",
+      "assets/css/tw.css",
+      "assets/js",
+      "assets/*.js"
+    ],
+    "rules": {
+      "recommended": true
+    }
+  }
+}
