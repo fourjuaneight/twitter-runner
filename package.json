@@ -10,8 +10,9 @@
     "clean:node": "rm -rf node_modules",
     "dev": "wrangler dev src/app.ts",
     "deploy": "wrangler publish src/app.ts",
-    "format": "rome format --write src/*.ts",
-    "lint": "rome check --apply-suggested src/*.ts"
+    "format": "rome format --write **/*.ts",
+    "lint": "rome check --apply-suggested **/*.ts",
+    "scripts:auto-tweet": "esno --no-cache scripts/auto-tweet.ts"
   },
   "repository": {
     "type": "git",
@@ -36,8 +37,10 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.16.0",
+    "@types/isomorphic-fetch": "^0.0.36",
     "@types/node": "^17.0.45",
     "esbuild": "^0.14.54",
+    "esno": "^0.16.3",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "rome": "0.10.1-next",
@@ -46,6 +49,9 @@
   },
   "dependencies": {
     "@cloudflare/wrangler": "^1.19.13",
-    "hono": "^2.2.3"
+    "dotenv": "^16.0.3",
+    "hono": "^2.2.3",
+    "isomorphic-fetch": "^3.0.0",
+    "openai": "^3.0.0"
   }
 }
