@@ -1,6 +1,13 @@
 import { Context } from 'hono';
 
-import { addData, addPrompt, getData, getPrompts, State, Tokens } from './hasura';
+import {
+  addData,
+  addPrompt,
+  getData,
+  getPrompts,
+  State,
+  Tokens,
+} from './hasura';
 import {
   authToken,
   details,
