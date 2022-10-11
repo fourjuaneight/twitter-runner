@@ -21,7 +21,7 @@ interface TweetResponse {
 
 dotenv.config();
 
-const { ACCESS_KEY, ACTIVE_USER, AUTH_KEY, OPENAI_API_KEY, PROMPTS_ENDPOINT } =
+const { ACCESS_KEY, ACTIVE_USER, AUTH_KEY, OPENAI_API_KEY, WORKER_ENDPOINT } =
   process.env;
 const configuration = new Configuration({
   apiKey: `${OPENAI_API_KEY}`,
@@ -31,7 +31,7 @@ const openai = new OpenAIApi(configuration);
 const getPrompts = async () => {
   try {
     const request = await fetch(
-      `${PROMPTS_ENDPOINT}/prompts?key=${ACCESS_KEY}&table=webdev`,
+      `${WORKER_ENDPOINT}/prompts?key=${ACCESS_KEY}&table=webdev`,
     );
     const response: PromptsResponse = await request.json();
 
@@ -51,7 +51,7 @@ const getPrompts = async () => {
 const getToken = async () => {
   try {
     const request = await fetch(
-      `${PROMPTS_ENDPOINT}/access?key=${ACCESS_KEY}&user=${ACTIVE_USER}`,
+      `${WORKER_ENDPOINT}/access?key=${ACCESS_KEY}&user=${ACTIVE_USER}`,
     );
     const response: TokenResponse = await request.json();
 
@@ -70,7 +70,7 @@ const getToken = async () => {
 };
 const tweet = async (token: string, body: string) => {
   try {
-    const request = await fetch(`${PROMPTS_ENDPOINT}/tweet`, {
+    const request = await fetch(`${WORKER_ENDPOINT}/tweet`, {
       method: 'POST',
       header: {
         'Content-Type': 'application/json',
