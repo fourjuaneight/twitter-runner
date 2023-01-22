@@ -14,7 +14,7 @@ import {
 
 const app = new Hono();
 
-app.get('/', ct) => {
+app.get('/', ct => {
   ctx.status(200);
   ctx.text('Why are you here?');
 });
