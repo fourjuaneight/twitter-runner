@@ -1,6 +1,6 @@
 {
   "name": "twitter-runner",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Serverless function to generate Twitter auth tokens and automate tweets.",
   "main": "src/app.ts",
   "private": true,
