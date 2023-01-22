@@ -14,6 +14,11 @@ import {
 
 const app = new Hono();
 
+app.get('/', ct) => {
+  ctx.status(200);
+  ctx.text('Why are you here?');
+});
+
 // generate twitter auth url and save code + state to DB
 app.get('/auth', async (ctx) => handleAuth(ctx));
 
