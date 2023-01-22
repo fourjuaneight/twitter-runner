@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.4] - 2023-01-22
+
+### Bug Fixes
+
+- [**breaking**] [Change callback endpoint with literal route.](https://github.com/fourjuaneight/twitter-runner/commit/336e47381c75dff571f9a59f9a5cb51d474869ec)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/6d72f43940ba04f9e51e541d04a2b51955aba1f6)
+- [Update framework.](https://github.com/fourjuaneight/twitter-runner/commit/a5c11209af74b7de500ed2210953be4ae119a74e)
+
 ## [2.2.3] - 2023-01-22
 
 ### Bug Fixes
