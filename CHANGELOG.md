@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.5] - 2023-01-22
+
+### Bug Fixes
+
+- [Minor syntax updates.](https://github.com/fourjuaneight/twitter-runner/commit/6e96a41f139d309c942d54bcff6cad71caed1bd7)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/3c165a0bd47fcf0c1186ffe914eaa27a8b41b4ea)
+- [Set basic message on index route.](https://github.com/fourjuaneight/twitter-runner/commit/2b1acb81acaa19c094527bb03aea99fdfaba7cb3)
+- [Simpler home route management.](https://github.com/fourjuaneight/twitter-runner/commit/82ed8274a9bd3dc6f62376393a362f2ab64d0776)
+
 ## [2.2.4] - 2023-01-22
 
 ### Bug Fixes
