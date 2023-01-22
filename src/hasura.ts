@@ -48,7 +48,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_state(
-            where: {user: {_eq: '${data.user}'}},
+            where: {user: {_eq: ${data.user}}},
             order_by: {created_at: desc}
           ) {
             codeVerifier
@@ -74,7 +74,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
       return `
         query {
           meta_twitter_tokens(
-            where: {user: {_eq: '${data.user}'}},
+            where: {user: {_eq: ${data.user}}},
             order_by: {created_at: desc}
           ) {
             accessToken
@@ -103,7 +103,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
             object: {
               accessToken: '${data.accessToken}',
               refreshToken: '${data.refreshToken}',
-              user: '${data.user}'
+              user: ${data.user}
             }
           ) {
             id
@@ -120,7 +120,7 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
             object: {
               codeVerifier: '${data.codeVerifier}',
               state: '${data.state}',
-              user: '${data.user}'
+              user: ${data.user}
             }
           ) {
             id
