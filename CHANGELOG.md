@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1] - 2023-01-22
+
+### Bug Fixes
+
+- [Restore ignore file.](https://github.com/fourjuaneight/twitter-runner/commit/12f8d61e6436d7598a56efe9ee1f59b11f50f353)
+- [Save user on mutations as numbers.](https://github.com/fourjuaneight/twitter-runner/commit/0bb009d435d67b7b5cec1ab720122429c13934e3)
+
+### Features
+
+- [Add script to automate tweeting.](https://github.com/fourjuaneight/twitter-runner/commit/370fa15726857bad6aaf8dd61af154cd7a937f0d)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/78da20c76685f269ce62fd716b04eb686dcbce1d)
+- [Minor syntax fixes.](https://github.com/fourjuaneight/twitter-runner/commit/cce3aaf16bcc2a4e1a68f40287d72d6bea483ca7)
+- [Minor syntax updates.](https://github.com/fourjuaneight/twitter-runner/commit/1a51897557a0b5725cc2e1e282f6fa81502913a1)
+
 ## [2.2.0] - 2022-10-11
 
 ### Bug Fixes
