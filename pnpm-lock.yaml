@@ -8,7 +8,7 @@ specifiers:
   dotenv: ^16.0.3
   esbuild: ^0.14.54
   esno: ^0.16.3
-  hono: ^2.2.3
+  hono: ^2.7.3
   husky: ^7.0.4
   isomorphic-fetch: ^3.0.0
   lint-staged: ^11.2.6
@@ -20,7 +20,7 @@ specifiers:
 dependencies:
   '@cloudflare/wrangler': 1.19.13
   dotenv: 16.0.3
-  hono: 2.2.3
+  hono: 2.7.3
   isomorphic-fetch: 3.0.0
   openai: 3.0.0
 
@@ -1463,8 +1463,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /hono/2.2.3:
-    resolution: {integrity: sha512-Xtokmfyt7Np6S/FIqFAFRuu+7vU7juJF3ApmRjg5cQLsrVEO19icy2Ux/MJ5eV8sDzFgHUmUegI+O/zD4Cam9w==}
+  /hono/2.7.3:
+    resolution: {integrity: sha512-2FkuQb3N8fzOGavZIl16pMuUGnZVvr/C+H/bk8gVsyNstm+7DpEbTZEvglMYI0Ehgy08AzyNN+sh07940WlZXA==}
     engines: {node: '>=16.0.0'}
     dev: false
 
