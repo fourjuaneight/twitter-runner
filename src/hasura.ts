@@ -167,7 +167,7 @@ export const addData = async <D extends unkown>(
         .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
-      console.log(`[hasura]:\n${errLog}`, { query });
+      console.log(`[hasura]:\n${errLog}`, { response, query });
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
@@ -214,7 +214,7 @@ export const getData = async <D extends unkown>(
         .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
-      console.log(`[hasura]:\n${errLog}`, { query });
+      console.log(`[hasura]:\n${errLog}`, { response, query });
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
@@ -269,7 +269,7 @@ export const addPrompt = async (
         .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
-      console.log(`[hasura]:\n${errLog}`, { query });
+      console.log(`[hasura]:\n${errLog}`, { response, query });
       throw `[hasura]:\n${errLog}\n${query}`;
     }
 
@@ -320,7 +320,7 @@ export const getPrompts = async (
         .map((err) => `${err.extensions.path}: ${err.message}`)
         .join('\n');
 
-      console.log(`[hasura]:\n${errLog}`, { query });
+      console.log(`[hasura]:\n${errLog}`, { response, query });
       throw `[hasura]:\n${errLog}\n${query}`;
     }
     const list = (response as HasuraQueryResp).data[`models_${table}`].map(
