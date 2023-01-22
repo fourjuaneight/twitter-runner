@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Bug Fixes
+
+- [Use double quotes on mutations.](https://github.com/fourjuaneight/twitter-runner/commit/660328662eb8836f5af8344981e70ee801cce14e)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/549e80e18d30a30a3ca618be017ffb3262cd4e52)
+- [Add response as log on Hasura errors.](https://github.com/fourjuaneight/twitter-runner/commit/9bdd1b0cf4ab9d93c5566eddd06e04252efae649)
+
 ## [2.2.1] - 2023-01-22
 
 ### Bug Fixes
