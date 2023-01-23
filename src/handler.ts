@@ -110,8 +110,7 @@ export const handleOAuth = async (ctx: Context) => {
     ctx.status(200);
 
     return ctx.json({
-      oauth_token: newTokens.oauth_token,
-      oauth_verifier: newTokens.oauth_verifier,
+      ...newTokens,
       version,
     });
   } catch (error) {
