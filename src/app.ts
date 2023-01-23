@@ -5,6 +5,7 @@ import {
   handleAuth,
   handleCallback,
   handleDetails,
+  handleOAuth,
   handlePrompt,
   handlePromptsList,
   handleRefresh,
@@ -18,6 +19,9 @@ app.get('/', (ctx) => ctx.text('Why are you here?'));
 
 // generate twitter auth url and save code + state to DB
 app.get('/auth', async (ctx) => handleAuth(ctx));
+
+// save authorized code + sate and access token, then return token
+app.get('/oauth', async (ctx) => handleOAuth(ctx));
 
 // save authorized code + sate and access token, then return token
 app.get('/callback', async (ctx) => handleCallback(ctx));

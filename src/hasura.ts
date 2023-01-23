@@ -26,6 +26,12 @@ interface HasuraErrors {
   }[];
 }
 
+export interface OAuth {
+  oauth_token: string;
+  oauth_verifier: string;
+  user: number;
+}
+
 export interface State {
   codeVerifier: string;
   state: string;
@@ -38,7 +44,7 @@ export interface Tokens {
   user: number;
 }
 
-type Table = 'state' | 'tokens';
+type Table = 'oauth' | 'state' | 'tokens';
 
 type Type = 'query' | 'search' | 'mutation';
 
@@ -109,6 +115,23 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
             id
             accessToken
             refreshToken
+            user
+          }
+        }
+      `;
+    case table === 'oauth' && type === 'mutation':
+      return `
+        mutation {
+          insert_meta_twitter_oauth_one(
+            object: {
+              oauth_token: "${data.oauth_token}",
+              oauth_verifier: "${data.oauth_verifier}",
+              user: ${data.user}
+            }
+          ) {
+            id
+            oauth_token
+            oauth_verifier
             user
           }
         }

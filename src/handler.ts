@@ -5,10 +5,12 @@ import {
   addPrompt,
   getData,
   getPrompts,
+  OAuth,
   State,
   Tokens,
 } from './hasura';
 import {
+  accessToken,
   authToken,
   details,
   refreshToken,
@@ -85,6 +87,38 @@ export const handleAuth = async (ctx: Context) => {
   } catch (error) {
     ctx.status(500);
 
+    return ctx.json({ error, version });
+  }
+};
+
+export const handleOAuth = async (ctx: Context) => {
+  const request = ctx.req;
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const token = searchParams.get('oauth_token');
+    const verifier = searchParams.get('oauth_verifier');
+
+    const newTokens = await accessToken(
+      newTokens.oauth_token,
+      newTokens.oauth_verifier
+    );
+    await addData<OAuth>(ctx, 'oauth', 'mutation', {
+      oauth_token: newTokens.oauth_token,
+      oauth_verifier: newTokens.oauth_verifier,
+      user: 1,
+    });
+
+    ctx.status(200);
+
+    return ctx.json({
+      oauth_token: newTokens.oauth_token,
+      oauth_verifier: newTokens.oauth_verifier,
+      version,
+    });
+  } catch (error) {
+    ctx.status(500);
+    console.log({ error, version });
     return ctx.json({ error, version });
   }
 };

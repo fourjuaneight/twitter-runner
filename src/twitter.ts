@@ -9,6 +9,11 @@ interface AccessTokenResult {
   refresh_token?: string;
 }
 
+interface OAuthAccessResult {
+  oauth_token: string;
+  oauth_token_secret: string;
+}
+
 interface TweetPosted {
   data: {
     id: string;
@@ -41,11 +46,47 @@ interface TwitterData {
 
 type User = 0 | 1 | 2;
 
-const URL = 'https://api.twitter.com/2';
+const BASE = 'https://api.twitter.com';
+const URL = `${BASE}/2`;
+// DOCS: https://developer.twitter.com/en/docs/authentication/api-reference/access_token
+const ACCESS = `${BASE}/oauth/access_token`;
 // DOCS: https://developer.twitter.com/en/docs/authentication/oauth-2-0/user-access-token
 const AUTH = `${URL}/oauth2`;
 // DOCS: https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
 const TWEET = `${URL}/tweets`;
+
+export const accessToken = async (
+  ctx: Context,
+  oauth_token: string,
+  oauth_verifier: string,
+) => {
+  const { TWT_CONSUMER_KEY } = ctx.env;
+  const data = {
+    oauth_consumer_key: TWT_CONSUMER_KEY,
+    oauth_token,
+    oauth_verifier,
+  };
+  const params = new URLSearchParams(data);
+
+  try {
+    const request = await fetch(`${ACCESS}?${params}`, { method: 'POST' });
+    const response: OAuthAccessResult = await request.json();
+
+    if (request.status !== 200) {
+      console.log(
+        `[fetch]: ${request.status} - ${request.statusText}`,
+        params,
+        response,
+      );
+      throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
+    }
+
+    return response;
+  } catch (error) {
+    console.log(`[accessToken]:\n${error}`);
+    throw `[accessToken]:\n${error}`;
+  }
+};
 
 export const authToken = async (
   ctx: Context,
@@ -154,7 +195,7 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
       },
       body,
     });
-    const response: any = await request.json();
+    const response = await request.json();
 
     if (request.status !== 200) {
       console.log(
