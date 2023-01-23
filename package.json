@@ -45,7 +45,7 @@
     "lint-staged": "^11.2.6",
     "rome": "0.10.1-next",
     "typescript": "^4.8.4",
-    "wrangler": "2.0.28"
+    "wrangler": "2.8.0"
   },
   "dependencies": {
     "@cloudflare/wrangler": "^1.19.13",
