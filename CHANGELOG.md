@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.2] - 2023-01-23
+
+### Bug Fixes
+
+- [Extract data from api response url params.](https://github.com/fourjuaneight/twitter-runner/commit/9e1e40ca28ac724b1e9de87d9f86a6cd7a53cfeb)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/9411a358d0fe1bc735850e169e9255e56dd3bffb)
+
 ## [2.3.1] - 2023-01-23
 
 ### Bug Fixes
