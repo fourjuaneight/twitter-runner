@@ -99,10 +99,7 @@ export const handleOAuth = async (ctx: Context) => {
     const token = searchParams.get('oauth_token');
     const verifier = searchParams.get('oauth_verifier');
 
-    const newTokens = await accessToken(
-      newTokens.oauth_token,
-      newTokens.oauth_verifier
-    );
+    const newTokens = await accessToken(oauth_token, oauth_verifier);
     await addData<OAuth>(ctx, 'oauth', 'mutation', {
       oauth_token: newTokens.oauth_token,
       oauth_verifier: newTokens.oauth_verifier,
