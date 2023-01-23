@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import { Context } from 'hono';
+import { Context } from "hono";
 
 interface AccessTokenResult {
-  token_type: 'bearer';
+  token_type: "bearer";
   expires_in: number;
   access_token: string;
   scope: string;
@@ -11,6 +11,7 @@ interface AccessTokenResult {
 
 interface OAuthAccessResult {
   oauth_token: string;
+  oauth_verifier?: string;
   oauth_token_secret: string;
 }
 
@@ -46,7 +47,7 @@ interface TwitterData {
 
 type User = 0 | 1 | 2;
 
-const BASE = 'https://api.twitter.com';
+const BASE = "https://api.twitter.com";
 const URL = `${BASE}/2`;
 // DOCS: https://developer.twitter.com/en/docs/authentication/api-reference/access_token
 const ACCESS = `${BASE}/oauth/access_token`;
@@ -58,7 +59,7 @@ const TWEET = `${URL}/tweets`;
 export const accessToken = async (
   ctx: Context,
   oauth_token: string,
-  oauth_verifier: string,
+  oauth_verifier: string
 ) => {
   const { TWT_CONSUMER_KEY } = ctx.env;
   const data = {
@@ -69,19 +70,24 @@ export const accessToken = async (
   const params = new URLSearchParams(data);
 
   try {
-    const request = await fetch(`${ACCESS}?${params}`, { method: 'POST' });
+    const request = await fetch(`${ACCESS}?${params}`, { method: "POST" });
     const response: OAuthAccessResult = await request.json();
 
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
 
-    return response;
+    const result: OAuthAccessResult = {
+      ...response,
+      oauth_verifier,
+    };
+
+    return result;
   } catch (error) {
     console.log(`[accessToken]:\n${error}`);
     throw `[accessToken]:\n${error}`;
@@ -92,27 +98,27 @@ export const authToken = async (
   ctx: Context,
   code: string,
   code_verifier: string,
-  user: User,
+  user: User
 ) => {
   const { CALLBACK_URL, TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
   const redirect_uri = CALLBACK_URL;
-  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === "0" ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     code,
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
     client_id,
     redirect_uri,
     code_verifier,
   };
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-    .join('&');
+    .join("&");
 
   try {
     const request = await fetch(`${AUTH}/token`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body,
     });
@@ -122,7 +128,7 @@ export const authToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -137,24 +143,24 @@ export const authToken = async (
 export const refreshToken = async (
   ctx: Context,
   refresh_token: string,
-  user: User,
+  user: User
 ) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
-  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === "0" ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     refresh_token,
-    grant_type: 'refresh_token',
+    grant_type: "refresh_token",
     client_id,
   };
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-    .join('&');
+    .join("&");
 
   try {
     const request = await fetch(`${AUTH}/token`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body,
     });
@@ -164,7 +170,7 @@ export const refreshToken = async (
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -178,20 +184,20 @@ export const refreshToken = async (
 
 export const revokeToken = async (ctx: Context, token: string, user: User) => {
   const { TWT_CLIENT_ID_0, TWT_CLIENT_ID_1 } = ctx.env;
-  const client_id = user === '0' ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
+  const client_id = user === "0" ? TWT_CLIENT_ID_0 : TWT_CLIENT_ID_1;
   const params = {
     token,
     client_id,
   };
   const body = Object.entries(params)
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-    .join('&');
+    .join("&");
 
   try {
     const request = await fetch(`${AUTH}/revoke`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body,
     });
@@ -201,7 +207,7 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -216,10 +222,10 @@ export const revokeToken = async (ctx: Context, token: string, user: User) => {
 export const tweet = async (token: string, text: string) => {
   try {
     const request = await fetch(TWEET, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `OAuth ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: {
         text,
@@ -231,7 +237,7 @@ export const tweet = async (token: string, text: string) => {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
         params,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
     }
@@ -245,7 +251,7 @@ export const tweet = async (token: string, text: string) => {
 
 export const details = async (
   ctx: Context,
-  id: string,
+  id: string
 ): Promise<TwitterData> => {
   const { TWT_TOKEN } = ctx.env;
   try {
@@ -254,16 +260,16 @@ export const details = async (
       {
         headers: {
           Authorization: `Bearer ${TWT_TOKEN}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      },
+      }
     );
     const response: TwitterResponse = await request.json();
 
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        response,
+        response
       );
       throw `[fetch]: ${request.status} - ${request.statusText}`;
     }
@@ -272,7 +278,7 @@ export const details = async (
     const text = response.data.text
       .replace(/[‘’]+/g, `'`)
       .replace(/[“”]+/g, `'`)
-      .replace(/(https:\/\/t.co\/[a-zA-z0-9]+)/g, '');
+      .replace(/(https:\/\/t.co\/[a-zA-z0-9]+)/g, "");
 
     return {
       tweet: text,

@@ -102,7 +102,8 @@ export const handleOAuth = async (ctx: Context) => {
     const newTokens = await accessToken(oauth_token, oauth_verifier);
     await addData<OAuth>(ctx, 'oauth', 'mutation', {
       oauth_token: newTokens.oauth_token,
-      oauth_verifier: newTokens.oauth_verifier,
+      oauth_verifier: newTokens.oauth_verifier ?? '',
+      oauth_token_secret: newTokens.oauth_token_secret,
       user: 1,
     });
 

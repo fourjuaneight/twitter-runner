@@ -29,6 +29,7 @@ interface HasuraErrors {
 export interface OAuth {
   oauth_token: string;
   oauth_verifier: string;
+  oauth_token_secret: string;
   user: number;
 }
 
@@ -126,12 +127,14 @@ const getQuery = <D extends unkown>(table: Table, type: Type, data: D) => {
             object: {
               oauth_token: "${data.oauth_token}",
               oauth_verifier: "${data.oauth_verifier}",
+              oauth_token_secret: "${data.oauth_token_secret}",
               user: ${data.user}
             }
           ) {
             id
             oauth_token
             oauth_verifier
+            oauth_token_secret
             user
           }
         }
