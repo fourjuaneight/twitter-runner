@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.1] - 2023-01-23
+
+### Bug Fixes
+
+- [Minor syntax corrections.](https://github.com/fourjuaneight/twitter-runner/commit/1a498150acc71d1b3cbb0bb24995cdf780ce86cd)
+- [Add missing token to oauth route.](https://github.com/fourjuaneight/twitter-runner/commit/2bf866ee629f81cd719e2860dfb54e6a97b9683a)
+- [Variable names and api request handling.](https://github.com/fourjuaneight/twitter-runner/commit/03f50d7f518d6a348977a75dfce15e303e00b72b)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/d25251802f9f61934a6959e91e4ca63234e27856)
+- [Update wrangler.](https://github.com/fourjuaneight/twitter-runner/commit/a0c6bcb044002cc5b5b597f1a226b23431c813a4)
+- [Update dependencies.](https://github.com/fourjuaneight/twitter-runner/commit/6a9b75a8914e07d31291b3e508885f148325163d)
+
 ## [2.3.0] - 2023-01-23
 
 ### Features
