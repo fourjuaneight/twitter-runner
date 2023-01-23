@@ -10,7 +10,7 @@ import {
   Tokens,
 } from './hasura';
 import {
-  accessToken,
+  accessOAuth,
   authToken,
   details,
   refreshToken,
@@ -99,7 +99,7 @@ export const handleOAuth = async (ctx: Context) => {
     const token = searchParams.get('oauth_token');
     const verifier = searchParams.get('oauth_verifier');
 
-    const newTokens = await accessToken(oauth_token, oauth_verifier);
+    const newTokens = await accessOAuth(ctx, `${token}`, `${verifier}`);
     await addData<OAuth>(ctx, 'oauth', 'mutation', {
       oauth_token: newTokens.oauth_token,
       oauth_verifier: newTokens.oauth_verifier ?? '',

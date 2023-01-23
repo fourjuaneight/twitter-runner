@@ -56,7 +56,7 @@ const AUTH = `${URL}/oauth2`;
 // DOCS: https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
 const TWEET = `${URL}/tweets`;
 
-export const accessToken = async (
+export const accessOAuth = async (
   ctx: Context,
   oauth_token: string,
   oauth_verifier: string
@@ -71,12 +71,12 @@ export const accessToken = async (
 
   try {
     const request = await fetch(`${ACCESS}?${params}`, { method: "POST" });
-    const response: OAuthAccessResult = await request.json();
+    const response: OAuthAccessResult = await request.text();
 
     if (request.status !== 200) {
       console.log(
         `[fetch]: ${request.status} - ${request.statusText}`,
-        params,
+        data,
         response
       );
       throw `[fetch]: ${request.status} - ${request.statusText} - ${response.error_description}`;
@@ -89,8 +89,8 @@ export const accessToken = async (
 
     return result;
   } catch (error) {
-    console.log(`[accessToken]:\n${error}`);
-    throw `[accessToken]:\n${error}`;
+    console.log(`[accessOAuth]:\n${error}`);
+    throw `[accessOAuth]:\n${error}`;
   }
 };
 
