@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2023-01-23
+
+### Features
+
+- [Add oauth handling with API v1.](https://github.com/fourjuaneight/twitter-runner/commit/594db0e1a7b1aa3c79bc9d718345708dcabc6b95)
+
+### Miscellaneous Tasks
+
+- [Update Changelog.](https://github.com/fourjuaneight/twitter-runner/commit/c7d4ecab9133f89a4bfc189e56db9acf6d591f57)
+- [Minor formatting updates.](https://github.com/fourjuaneight/twitter-runner/commit/eaa82bb562217f3460fb63dee89b36ab933a7330)
+- [Add new env var to worker action.](https://github.com/fourjuaneight/twitter-runner/commit/99592bf10ec8bccb5acda61d54cd37582bcfe8ba)
+
 ## [2.2.5] - 2023-01-22
 
 ### Bug Fixes
